@@ -6,7 +6,7 @@ import { ForgotPasswordModule } from 'app/modules/admin/pages/authentication/for
 import { ResetPasswordModule } from 'app/modules/admin/pages/authentication/reset-password/reset-password.module';
 import { UnlockSessionModule } from 'app/modules/admin/pages/authentication/unlock-session/unlock-session.module';
 import { ConfirmationRequiredModule } from 'app/modules/admin/pages/authentication/confirmation-required/confirmation-required.module';
-
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
     imports: [
         SignInModule,
@@ -15,7 +15,8 @@ import { ConfirmationRequiredModule } from 'app/modules/admin/pages/authenticati
         ForgotPasswordModule,
         ResetPasswordModule,
         UnlockSessionModule,
-        ConfirmationRequiredModule
+        ConfirmationRequiredModule,
+        MatSelectModule
     ],
     exports: [
         SignInModule,

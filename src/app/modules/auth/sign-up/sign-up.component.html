@@ -1,13 +1,12 @@
 <div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
-    <div class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
-        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
+    <div class="md:flex md:items-start md:justify-start w-full sm:w-auto md:h-full  py-8  sm:p-12  sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
+        <div class="w-full max-w-70 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
-            <div class="w-12">
+            <div class="w-12 md:mb-10">
                 <img src="assets/images/logo/logo.svg">
             </div>
-
             <!-- Title -->
-            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign up</div>
+            <div class="mt-0 text-4xl font-extrabold tracking-tight leading-tight">Sign up</div>
             <div class="flex items-baseline mt-0.5 font-medium">
                 <div>Already have an account?</div>
                 <a
@@ -34,13 +33,37 @@
 
                 <!-- Name field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Full name</mat-label>
+                    <mat-label>First name</mat-label>
                     <input
-                        id="name"
+                        id="fname"
                         matInput
-                        [formControlName]="'name'">
-                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
-                        Full name is required
+                        [formControlName]="'fname'">
+                    <mat-error *ngIf="signUpForm.get('fname').hasError('required')">
+                        First name is required
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Name field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Last name</mat-label>
+                    <input
+                        id="lname"
+                        matInput
+                        [formControlName]="'lname'">
+                    <mat-error *ngIf="signUpForm.get('lname').hasError('required')">
+                        Last name is required
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Name field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Télephone</mat-label>
+                    <input
+                        id="tel"
+                        matInput
+                        [formControlName]="'tel'">
+                    <mat-error *ngIf="signUpForm.get('tel').hasError('required')">
+                        Phone is required
                     </mat-error>
                 </mat-form-field>
 
@@ -87,33 +110,147 @@
                     </mat-error>
                 </mat-form-field>
 
-                <!-- Company field -->
+       
+
+
+
+            </form>
+        </div>
+    </div>
+    <div class="md:flex  md:justify-start w-full sm:w-auto md:h-full  py-1  sm:p-12  sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
+        <div class="w-full max-w-90 sm:w-80 mx-auto sm:mx-0">
+            <!-- Logo -->
+         
+
+      
+            <!-- Alert -->
+            <fuse-alert
+                class="mt-8 -mb-4"
+                *ngIf="showAlert"
+                [appearance]="'outline'"
+                [showIcon]="false"
+                [type]="alert.type"
+                [@shake]="alert.type === 'error'">
+                {{alert.message}}
+            </fuse-alert>
+
+            <!-- Sign Up form -->
+            <form
+                class="mt-2"
+                [formGroup]="signUpForm">
+                                <!-- Name field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Company</mat-label>
+                    <mat-label>Restaurant name</mat-label>
                     <input
-                        id="company-confirm"
+                        id="restauName"
                         matInput
-                        [formControlName]="'company'">
+                        [formControlName]="'restauName'">
+                    <mat-error *ngIf="signUpForm.get('restauName').hasError('required')">
+                        Restaurant name is required
+                    </mat-error>
                 </mat-form-field>
 
-                <!-- ToS and PP -->
-                <div class="inline-flex items-end w-full mt-1.5">
-                    <mat-checkbox
-                        [color]="'primary'"
-                        [formControlName]="'agreements'">
-                        <span>I agree to the</span>
-                        <a
-                            class="ml-1 text-primary-500 hover:underline"
-                            [routerLink]="['./']">Terms of Service
-                        </a>
-                        <span>and</span>
-                        <a
-                            class="ml-1 text-primary-500 hover:underline"
-                            [routerLink]="['./']">Privacy Policy
-                        </a>
-                    </mat-checkbox>
-                </div>
 
+
+                <!-- Name field -->
+                <mat-form-field class="w-full">
+                    <mat-label>short description</mat-label>
+                    <input
+                        id="name"
+                        matInput
+                        [formControlName]="'name'">
+                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
+                        Full name is required
+                    </mat-error>
+                </mat-form-field>
+                <!-- Name field -->
+                <mat-form-field class="w-full">                
+           
+                        <mat-label>Choose a Speciality</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let s of specialities" value="option1">{{s.label}}</mat-option>
+                      
+                        </mat-select>
+               
+                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
+                        Full name is required
+                    </mat-error>
+                </mat-form-field>
+                <!-- Name field -->
+                <mat-form-field class="w-full">                
+           
+                    <mat-label>Choose devise</mat-label>
+                    <mat-select>
+                      <mat-option *ngFor="let c of currencies" value="option1">{{c.code}}</mat-option>
+                   
+                    </mat-select>
+           
+                <mat-error *ngIf="signUpForm.get('name').hasError('required')">
+                    Full name is required
+                </mat-error>
+            </mat-form-field>
+
+                <!-- Company field -->
+                <mat-form-field class="w-3/4 pr-1">
+                    <mat-label>Street</mat-label>
+                    <input
+                        id="street"
+                        matInput
+                        [formControlName]="'street'">
+
+                </mat-form-field>
+                <!-- Company field -->
+                <mat-form-field class="w-1/4 pl-1">
+                    <mat-label>Number</mat-label>
+                    <input
+                        id="number"
+                        matInput
+                        [formControlName]="'number'">
+                </mat-form-field>
+
+                <!-- Company field -->
+                <mat-form-field class="w-1/2 pr-1">
+                    <mat-label>City</mat-label>
+                    <input
+                        id="city"
+                        matInput
+                        [formControlName]="'city'">
+
+                </mat-form-field>
+
+                                <!-- Company field -->
+                <mat-form-field class="w-1/2 pl-1">
+                    <mat-label>State</mat-label>
+                    <input
+                        id="state"
+                        matInput
+                        [formControlName]="'state'">
+                </mat-form-field>
+
+                <!-- Company field -->
+                <mat-form-field class="w-1/2 pr-1">                
+           
+                    <mat-label>Country</mat-label>
+                    <mat-select>
+                      <mat-option value="option1">Tunisia</mat-option>
+                      <mat-option value="option2">RCD</mat-option>
+                      <mat-option value="option3">Maroc</mat-option>
+                    </mat-select>
+           
+
+            </mat-form-field>
+
+            <mat-form-field class="w-1/2 pl-1">
+                <mat-label>Post code</mat-label>
+                <input
+                    id="postCode"
+                    matInput
+                    [formControlName]="'postCode'">
+            </mat-form-field>
+                <!-- ToS and PP -->
+                <mat-error *ngIf="signUpForm.get('postCode').hasError('required')">
+                    Addresse fields are required
+                </mat-error>
                 <!-- Submit button -->
                 <button
                     class="fuse-mat-button-large w-full mt-6"
@@ -133,6 +270,8 @@
             </form>
         </div>
     </div>
+
+  
     <div class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l">
         <!-- Background - @formatter:off -->
         <!-- Rings -->

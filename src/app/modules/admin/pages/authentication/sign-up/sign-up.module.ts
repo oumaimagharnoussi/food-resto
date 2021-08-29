@@ -15,6 +15,7 @@ import { SignUpFullscreenComponent } from 'app/modules/admin/pages/authenticatio
 import { SignUpFullscreenReversedComponent } from 'app/modules/admin/pages/authentication/sign-up/fullscreen-reversed/sign-up.component';
 import { SignUpSplitScreenComponent } from 'app/modules/admin/pages/authentication/sign-up/split-screen/sign-up.component';
 import { SignUpSplitScreenReversedComponent } from 'app/modules/admin/pages/authentication/sign-up/split-screen-reversed/sign-up.component';
+import { MatSelectModule } from '@angular/material/select';
 
 const routes: Routes = [
     {
@@ -71,7 +72,8 @@ const routes: Routes = [
         MatInputModule,
         MatProgressSpinnerModule,
         FuseAlertModule,
-        SharedModule
+        SharedModule,
+        MatSelectModule
     ]
 })
 export class SignUpModule
