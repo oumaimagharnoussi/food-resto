@@ -17,11 +17,14 @@ import { SharedModule } from 'app/shared/shared.module';
 import { InventoryComponent } from 'app/modules/admin/apps/ecommerce/inventory/inventory.component';
 import { InventoryListComponent } from 'app/modules/admin/apps/ecommerce/inventory/list/inventory.component';
 import { ecommerceRoutes } from 'app/modules/admin/apps/ecommerce/ecommerce.routing';
+import { DetailsComponent } from './inventory/details/details.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
     declarations: [
         InventoryComponent,
-        InventoryListComponent
+        InventoryListComponent,
+        DetailsComponent
     ],
     imports     : [
         RouterModule.forChild(ecommerceRoutes),
@@ -38,7 +41,8 @@ import { ecommerceRoutes } from 'app/modules/admin/apps/ecommerce/ecommerce.rout
         MatSelectModule,
         MatSlideToggleModule,
         MatTooltipModule,
-        SharedModule
+        SharedModule,
+        MatSidenavModule,
     ]
 })
 export class ECommerceModule

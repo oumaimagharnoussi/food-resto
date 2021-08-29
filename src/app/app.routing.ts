@@ -98,9 +98,7 @@ export const appRoutes: Route[] = [
 
             // Management
             {path: 'manage', children: [
-                //stock
-                {path: 'stock', loadChildren: () => import('app/modules/admin/stock/stock.module').then(m => m.StockModule)},
-                //order
+               //order
                 {path: 'order', loadChildren: () => import('app/modules/admin/order/order.module').then(m => m.OrderModule)},
 
             ]},

@@ -10,6 +10,7 @@ import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/co
 import { Tag, Task } from 'app/modules/admin/apps/tasks/tasks.types';
 import { TasksService } from 'app/modules/admin/apps/tasks/tasks.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { OrderService } from '../services/order.service';
 
 @Component({
     selector       : 'tasks-list',
@@ -44,7 +45,8 @@ export class TasksListComponent implements OnInit, OnDestroy
         private _router: Router,
        
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private _orderService: OrderService
     )
     {
         const today = new Date();
@@ -72,6 +74,9 @@ export class TasksListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        this._orderService.getOrders().subscribe(
+            res=> console.log(res)
+        )
         // Get the tags
      
 

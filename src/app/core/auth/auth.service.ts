@@ -50,6 +50,19 @@ export class AuthService
         return localStorage.getItem('accessToken') ?? '';
     }
 
+    /**
+     * Setter & getter for user
+     */
+    set accessUser(user: string)
+    {
+        localStorage.setItem('accessUser', user);
+    }
+
+    get accessUser(): string
+    {
+        return localStorage.getItem('accessUser') ?? '';
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -98,6 +111,8 @@ export class AuthService
 
                 // Store the user on the user service
                 this._userService.user = response.data;
+                this.accessUser=response.data.id;
+              
 
                 // Return a new observable with the response
                 return of(response);
@@ -143,6 +158,7 @@ export class AuthService
     {
         // Remove the access token from the local storage
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('accessUser');
 
         // Set the authenticated flag to false
         this._authenticated = false;
