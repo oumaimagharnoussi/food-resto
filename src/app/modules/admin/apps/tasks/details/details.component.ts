@@ -32,6 +32,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
     tasks: Task[];
     private _tagsPanelOverlayRef: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    productId: any;
 
     /**
      * Constructor
@@ -48,6 +49,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
         private _viewContainerRef: ViewContainerRef
     )
     {
+
     }
 
     // -----------------------------------------------------------------------------------------------------

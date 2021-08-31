@@ -16,6 +16,7 @@ import { NotesDetailsComponent } from 'app/modules/admin/apps/notes/details/deta
 import { NotesListComponent } from 'app/modules/admin/apps/notes/list/list.component';
 import { NotesLabelsComponent } from 'app/modules/admin/apps/notes/labels/labels.component';
 import { notesRoutes } from 'app/modules/admin/apps/notes/notes.routing';
+import { FuseCardModule } from '@fuse/components/card';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { notesRoutes } from 'app/modules/admin/apps/notes/notes.routing';
         MatRippleModule,
         MatSidenavModule,
         FuseMasonryModule,
-        SharedModule
+        SharedModule,
+        FuseCardModule
     ]
 })
 export class NotesModule

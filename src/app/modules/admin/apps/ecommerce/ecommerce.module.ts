@@ -19,12 +19,14 @@ import { InventoryListComponent } from 'app/modules/admin/apps/ecommerce/invento
 import { ecommerceRoutes } from 'app/modules/admin/apps/ecommerce/ecommerce.routing';
 import { DetailsComponent } from './inventory/details/details.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { AddComponent } from './inventory/add/add.component';
 
 @NgModule({
     declarations: [
         InventoryComponent,
         InventoryListComponent,
-        DetailsComponent
+        DetailsComponent,
+        AddComponent
     ],
     imports     : [
         RouterModule.forChild(ecommerceRoutes),

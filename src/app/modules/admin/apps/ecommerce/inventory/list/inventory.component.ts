@@ -10,6 +10,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { DOCUMENT } from '@angular/common';
+import { ProductService } from '../../services/product.service';
 
 
 
@@ -48,6 +49,7 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
 
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
 
+    add:boolean=false
     drawerMode: 'side' | 'over';
     products:any=[]
 
@@ -69,6 +71,7 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         @Inject(DOCUMENT) private _document: any,
         private _router: Router,
+        private _productService: ProductService
     )
     {
     }
@@ -76,6 +79,10 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    showAddForm()
+    {
+        this.add=!this.add;
+    }
     /**
      * On backdrop clicked
      */
@@ -87,6 +94,16 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
          // Mark for check
          this._changeDetectorRef.markForCheck();
      }
+
+     getProducts(){
+        this._productService.getProducts().subscribe(
+            res=>{
+                this.products=res
+                 // Mark for check
+         this._changeDetectorRef.markForCheck();
+            }
+        )
+     }
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -96,6 +113,7 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
      */
     ngOnInit(): void
     {
+        this.getProducts()
         // Subscribe to media query change
         this._fuseMediaWatcherService.onMediaQueryChange$('(min-width: 1440px)')
             .pipe(takeUntil(this._unsubscribeAll))

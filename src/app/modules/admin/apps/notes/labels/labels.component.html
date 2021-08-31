@@ -1,7 +1,7 @@
 <div class="flex flex-col flex-auto w-80 min-w-80 p-2 md:p-4">
     <!-- Header -->
     <div class="flex items-center justify-between">
-        <div class="text-2xl font-semibold">Edit labels</div>
+        <div class="text-2xl font-semibold">Edit menus</div>
         <button
             matDialogClose
             mat-icon-button>
@@ -15,13 +15,13 @@
         <input
             name="new-label"
             [autocomplete]="'off'"
-            [placeholder]="'Create new label'"
+            [placeholder]="'Create new menu'"
             matInput
             #newLabelInput>
         <button
             [class.invisible]="newLabelInput.value.trim() === ''"
             mat-icon-button
-            (click)="addLabel(newLabelInput.value); newLabelInput.value = ''"
+            (click)="addMenu(newLabelInput.value); newLabelInput.value = ''"
             matSuffix>
             <mat-icon
                 class="icon-size-5"
@@ -30,21 +30,22 @@
     </mat-form-field>
     <!-- Labels -->
     <div class="flex flex-col mt-4">
-        <ng-container *ngIf="(labels$ | async) as labels">
-            <ng-container *ngFor="let label of labels; trackBy: trackByFn">
+        <ng-container >
+            <ng-container *ngFor="let m of menus">
                 <mat-form-field class="fuse-mat-dense w-full">
                     <button
                         mat-icon-button
                         matPrefix
-                        (click)="deleteLabel(label.id)">
+                        (click)="deleteMenu(m.id)"
+                        >
                         <mat-icon
                             class="icon-size-5"
                             [svgIcon]="'heroicons_solid:trash'"></mat-icon>
                     </button>
                     <input
                         [autocomplete]="'off'"
-                        [(ngModel)]="label.title"
-                        (input)="updateLabel(label)"
+                        [(ngModel)]="m.label"
+                        (input)="updateMenu(m)"
                         required
                         matInput>
                 </mat-form-field>

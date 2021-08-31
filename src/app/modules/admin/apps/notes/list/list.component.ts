@@ -8,6 +8,8 @@ import { NotesLabelsComponent } from 'app/modules/admin/apps/notes/labels/labels
 import { NotesService } from 'app/modules/admin/apps/notes/notes.service';
 import { Label, Note } from 'app/modules/admin/apps/notes/notes.types';
 import { cloneDeep } from 'lodash-es';
+import { MenuService } from '../services/menu.service';
+import { ProductService } from '../../ecommerce/services/product.service';
 
 @Component({
     selector       : 'notes-list',
@@ -17,6 +19,8 @@ import { cloneDeep } from 'lodash-es';
 })
 export class NotesListComponent implements OnInit, OnDestroy
 {
+    menus:any;
+    showAll:boolean=false;
     labels$: Observable<Label[]>;
     notes$: Observable<Note[]>;
 
@@ -27,6 +31,8 @@ export class NotesListComponent implements OnInit, OnDestroy
     masonryColumns: number = 4;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    selectedMenu: any;
+    products: any;
 
     /**
      * Constructor
@@ -35,9 +41,21 @@ export class NotesListComponent implements OnInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _matDialog: MatDialog,
-        private _notesService: NotesService
+        private _notesService: NotesService,
+
+        private _menuService : MenuService,
+        private _productService: ProductService
     )
     {
+        this._matDialog.afterAllClosed.subscribe(
+            res=>{
+                this.getMenus()
+                this.getAllProducts()
+                this.showAll=true
+                this.selectedMenu=null
+                
+            }
+        )
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -61,6 +79,7 @@ export class NotesListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        this.getMenus()
         // Request the data from the server
         this._notesService.getLabels().subscribe();
         this._notesService.getNotes().subscribe();
@@ -170,7 +189,105 @@ export class NotesListComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+    getAllProducts(){
+        this.showAll=!this.showAll
+        if(this.showAll==true){
+            this._productService.getProducts().subscribe(
+                res=>{
+                    this.products=res;
+                       // Mark for check
+                       this._changeDetectorRef.markForCheck();
+                }
+            )
+        }
 
+    }
+    totalMenuPrice(){
+        if(this.selectedMenu){
+            if(this.selectedMenu.products.length==0){
+                return 0
+            }else{
+                let sum=0;
+                this.selectedMenu.products.forEach(element => {
+                    if(element.unitPrice){
+                        sum+=element.unitPrice
+                    }
+                });
+                return sum;
+    
+            }
+        }
+
+    }
+
+  
+    getMenus(){
+        this._menuService.getMenus().subscribe(
+            (res)=>{
+                this.menus=res
+                if(res.length>0){
+                    this.selectedMenu=res[0];
+                }
+                  // Mark for check
+                  this._changeDetectorRef.markForCheck();
+            }
+        )
+    }
+
+    addProductToMenu(p){
+        
+        this.selectedMenu.products.push(p);
+        this._menuService.updateMenu(this.selectedMenu,this.selectedMenu.id).subscribe(
+            res=>{
+                console.log(res)
+            }
+        )
+    }
+    removeProductFromMenu(p){
+        let x=-1
+        let index=-1
+        this.selectedMenu.products.forEach(element => {
+            x=x+1
+            if(element.id==p.id) index=x
+        });
+        if(index>=0){
+            this.selectedMenu.products.splice(index, 1);
+            this._menuService.updateMenu(this.selectedMenu,this.selectedMenu.id).subscribe(
+                res=>{
+                    console.log(res)
+                }
+            )
+        }
+        
+    }
+
+     contain(p):boolean{
+         let res =false;
+         if(this.selectedMenu){
+            if(this.selectedMenu.products.length==0){
+                console.log(p,"mch mawjoud")
+                return false;
+                 
+            }else{
+                this.selectedMenu.products.forEach(element => {
+                    if(p.id==element.id){
+                        console.log(p,"mawjoud")
+                       res=true;
+                    }
+                    if(res==true){
+                        return true
+                    }
+                    
+                });
+                return res;
+            }
+         }else{
+             return false
+         }
+
+      
+
+    }
     /**
      * Add a new note
      */
@@ -178,6 +295,7 @@ export class NotesListComponent implements OnInit, OnDestroy
     {
         this._matDialog.open(NotesDetailsComponent, {
             autoFocus: false,
+            disableClose: true,
             data     : {
                 note: {}
             }
@@ -189,7 +307,7 @@ export class NotesListComponent implements OnInit, OnDestroy
      */
     openEditLabelsDialog(): void
     {
-        this._matDialog.open(NotesLabelsComponent, {autoFocus: false});
+        this._matDialog.open(NotesLabelsComponent, {autoFocus: false, disableClose: true});
     }
 
     /**
@@ -199,6 +317,7 @@ export class NotesListComponent implements OnInit, OnDestroy
     {
         this._matDialog.open(NotesDetailsComponent, {
             autoFocus: false,
+            disableClose: true,
             data     : {
                 note: cloneDeep(note)
             }
@@ -251,5 +370,12 @@ export class NotesListComponent implements OnInit, OnDestroy
     trackByFn(index: number, item: any): any
     {
         return item.id || index;
+    }
+
+    showMenu(m){
+        this.selectedMenu=m;
+          // Mark for check
+          this._changeDetectorRef.markForCheck();
+        console.log(m)
     }
 }

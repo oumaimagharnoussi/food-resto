@@ -3,6 +3,8 @@ import { NotesService } from 'app/modules/admin/apps/notes/notes.service';
 import { Label } from 'app/modules/admin/apps/notes/notes.types';
 import { debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { MenuService } from '../services/menu.service';
+import { NotesListComponent } from '../list/list.component';
 
 @Component({
     selector       : 'notes-labels',
@@ -16,13 +18,15 @@ export class NotesLabelsComponent implements OnInit, OnDestroy
 
     labelChanged: Subject<Label> = new Subject<Label>();
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    menus: any;
 
     /**
      * Constructor
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _notesService: NotesService
+        private _notesService: NotesService,
+        private _menuService: MenuService
     )
     {
     }
@@ -36,6 +40,8 @@ export class NotesLabelsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        this.getMenus()
+
         // Get the labels
         this.labels$ = this._notesService.labels$;
 
@@ -66,6 +72,47 @@ export class NotesLabelsComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
+    getMenus(){
+        this._menuService.getMenus().subscribe(
+            res=>{
+                this.menus=res
+                 // Mark for check
+                 this._changeDetectorRef.markForCheck();
+            }
+        )
+    }
+    deleteMenu(id){
+        this._menuService.deleteMenu(id).subscribe(
+            res=>{
+                this.getMenus()
+
+            }
+        )
+    }
+
+    updateMenu(menu){
+        this._menuService.updateMenu(menu,menu.id).subscribe(
+            res=>{
+                this.getMenus()
+
+            }
+        )
+    }
+    addMenu(label){
+        this._menuService.getRestaurant().subscribe(
+            resto=>{
+                this._menuService.addMenu({label:label,restaurant:'api/restaurants/'+resto[0].id}).subscribe(
+                    res=>{
+                        this.getMenus()
+                    }
+                )
+            }
+        )
+
+
+    }
+
 
     /**
      * Add label
