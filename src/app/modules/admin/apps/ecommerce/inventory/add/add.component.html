@@ -12,16 +12,14 @@
                     <div class=" border items-center justify-center  rounded overflow-hidden">
                         <form [formGroup] = "uploadForm" (ngSubmit)="onSubmit()">      
                             <div>
-                              <input type="file" name="profile" (change)="onFileSelect($event)" />
+                              <input type="file" data-max-size="500" name="profile" (change)="onFileSelect($event)" />
                             </div>
                             <div>
                                 <img *ngIf="filepath.length==0" src="https://luigispizzakenosha.com/wp-content/uploads/placeholder.png">
                                 <img *ngIf="filepath.length>0"     [src]="'https://food.dev.confledis.fr/media/'+filepath">
                            
                             </div>
-                            <div>
-                              <button type="submit">Upload</button>
-                            </div>
+                         
                           </form>
                     </div>
               
@@ -29,14 +27,7 @@
 
 
 
-                <div class="flex flex-col mt-8">
-                    <span class="font-semibold mb-2">Product status</span>
-                    <mat-slide-toggle
-                     
-                        [color]="'primary'">
-                      
-                    </mat-slide-toggle>
-                </div>
+              
             </div>
 
             <div class="flex flex-auto flex-wrap">

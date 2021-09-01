@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -12,6 +14,10 @@ import { InventoryListComponent } from '../list/inventory.component';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
+  SERVER_URL = "https://food.dev.confledis.fr/api/media_objects";
+  uploadForm: FormGroup;  
+  filepath=""
+  
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   productId: any;
   product={
@@ -24,7 +30,7 @@ export class DetailsComponent implements OnInit {
     restaurant:"",
     menus:null
     }
-  constructor(private _productListComponent: InventoryListComponent, private _activatedRoute: ActivatedRoute,
+  constructor(private formBuilder: FormBuilder, private httpClient: HttpClient,private _productListComponent: InventoryListComponent, private _activatedRoute: ActivatedRoute,
     private _productService:ProductService,private _changeDetectorRef: ChangeDetectorRef,
     private _router: Router
     ) { 
@@ -44,6 +50,12 @@ export class DetailsComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.uploadForm = this.formBuilder.group({
+      profile: ['']
+    });
+
+    
+
     
     this._productListComponent.matDrawer.open();
     this._productService.getProduct(this.getId(window.location.pathname)).subscribe(
@@ -51,11 +63,38 @@ export class DetailsComponent implements OnInit {
         this.product=res
           // Mark for check
           this._changeDetectorRef.markForCheck();
+          if(this.product.image){
+            this.filepath=this.product.image.filePath
+          }
 
       }
     )
 
     
+  }
+
+  onFileSelect(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.uploadForm.get('profile').setValue(file);
+      this.onSubmit()
+    }
+  }
+
+  onSubmit() {
+
+    const formData = new FormData();
+    formData.append('file', this.uploadForm.get('profile').value);
+
+    this.httpClient.post<any>(this.SERVER_URL, formData).subscribe(
+      (res) =>{
+        this.product.image='api/media_objects/'+res.id;
+        this.filepath=res.filePath
+         // Mark for check
+         this._changeDetectorRef.markForCheck();
+      } ,
+      (err) => console.log(err)
+    );
   }
 
   updateProduct(){

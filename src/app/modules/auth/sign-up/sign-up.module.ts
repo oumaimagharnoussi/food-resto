@@ -12,7 +12,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { AuthSignUpComponent } from 'app/modules/auth/sign-up/sign-up.component';
 import { authSignupRoutes } from 'app/modules/auth/sign-up/sign-up.routing';
 import { MatSelectModule } from '@angular/material/select';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 @NgModule({
     declarations: [
         AuthSignUpComponent
@@ -28,7 +28,8 @@ import { MatSelectModule } from '@angular/material/select';
         FuseCardModule,
         FuseAlertModule,
         SharedModule,
-        MatSelectModule
+        MatSelectModule,
+        MatSnackBarModule
     ]
 })
 export class AuthSignUpModule

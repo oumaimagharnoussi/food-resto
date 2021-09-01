@@ -20,7 +20,7 @@ import { ecommerceRoutes } from 'app/modules/admin/apps/ecommerce/ecommerce.rout
 import { DetailsComponent } from './inventory/details/details.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AddComponent } from './inventory/add/add.component';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
     declarations: [
         InventoryComponent,
@@ -45,6 +45,7 @@ import { AddComponent } from './inventory/add/add.component';
         MatTooltipModule,
         SharedModule,
         MatSidenavModule,
+        MatProgressSpinnerModule
     ]
 })
 export class ECommerceModule

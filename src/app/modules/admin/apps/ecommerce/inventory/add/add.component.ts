@@ -15,9 +15,9 @@ export class AddComponent implements OnInit {
   p={
     name:"",
     description:"",
-    stock:-1,
-    seuil:-1,
-    unitPrice:-1,
+    stock:0,
+    seuil:0,
+    unitPrice:0,
     image:null,
     restaurant:""
     }

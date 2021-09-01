@@ -15,10 +15,11 @@ export default class Restaurant{
     postalCode: string;
     administrativeAreaLevel1: string;
     streetNumber: number;
-    specialities:[Speciality];
+    speciality:string;
   description: string;
   restaurantOwner:string
   currency:any;
+  restaurantTel:any
   
   }
   

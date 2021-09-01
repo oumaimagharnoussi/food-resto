@@ -8,10 +8,14 @@ import Restaurant from 'app/shared/Models/Restaurant';
 import RestaurantOwner from 'app/shared/Models/RestaurantOwner';
 import { DeviseService } from 'app/shared/services/devise.service';
 import { SpecialityService } from 'app/shared/services/speciality.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector     : 'auth-sign-up',
+    
     templateUrl  : './sign-up.component.html',
+    styleUrls: ['./sign-up.component.scss'],
+    
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
@@ -26,6 +30,8 @@ export class AuthSignUpComponent implements OnInit
     signUpForm: FormGroup;
     showAlert: boolean = false;
     currencies: Object;
+    devise:any=null
+    speciality:any=null
 
     /**
      * Constructor
@@ -36,10 +42,20 @@ export class AuthSignUpComponent implements OnInit
         private _router: Router,
         private _specialityService: SpecialityService,
         private _cuurencyService: DeviseService,
+        private _snackBar: MatSnackBar
        
     )
     {
     }
+
+    openSnackBar() {
+        this._snackBar.open('Speciality or currency missing !', 'OK', {
+            duration: 2500,
+            horizontalPosition: 'start',
+            verticalPosition: 'top',
+            panelClass: ['mat-toolbar', 'mat-warn']
+        });
+      }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -73,7 +89,7 @@ export class AuthSignUpComponent implements OnInit
                 tel      : ['', Validators.required],
                 email     : ['', [Validators.required, Validators.email]],
                 password  : ['', Validators.required],
-                company   : [''],
+            
                 restauName  :  ['', Validators.required],
                 description  :  ['', Validators.required],
                 street  :  ['', Validators.required],
@@ -81,7 +97,8 @@ export class AuthSignUpComponent implements OnInit
                 city  :  ['', Validators.required],
                 state  :  ['', Validators.required],
                 postCode  :  ['', Validators.required],
-                agreements: ['', Validators.requiredTrue]
+            
+                restaurantTel:  ['', Validators.required]
             }
         );
     }
@@ -89,12 +106,14 @@ export class AuthSignUpComponent implements OnInit
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
+    
     /**
      * Sign up
      */
     signUp(): void
     {
+        // Return if the form is invalid
+    
    
         const restaurantOwnerInfo = new RestaurantOwner();
        
@@ -114,8 +133,11 @@ export class AuthSignUpComponent implements OnInit
         restaurantInfo.name=this.signUpForm.value.restauName;
         restaurantInfo.postalCode=this.signUpForm.value.postCode;
         restaurantInfo.route=this.signUpForm.value.street;
+        restaurantInfo.currency='api/currencies/'+this.devise
+        restaurantInfo.speciality='api/specialities/'+this.speciality
        // restaurantInfo.logo=this.restaurant.logo;
         restaurantInfo.streetNumber=Number(this.signUpForm.value.number);
+        restaurantInfo.restaurantTel=this.signUpForm.value.restaurantTel;
 
         // Sign up
         this._authService.signUp(restaurantOwnerInfo)

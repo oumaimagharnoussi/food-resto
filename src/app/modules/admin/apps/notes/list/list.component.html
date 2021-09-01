@@ -94,9 +94,9 @@
                         {{selectedMenu?.label}} ( {{totalMenuPrice()}} $)
                     </label>
 
-                    <label class="text-xl font-bold text-red-700" *ngIf="!selectedMenu">
-                        No menu added !
-                        <button (click)="openEditLabelsDialog()"> Manage menu</button>
+                    <label class="text-xl font-bold text-red-700 space-y-2" *ngIf="!selectedMenu">
+                        No menu added ! <br>
+                        <button  mat-flat-button [color]="'warn'" class="ml-4 px-1 sm:px-4 min-w-10" (click)="openEditLabelsDialog()"> Manage menu</button>
                     </label>
                    
                 </div>

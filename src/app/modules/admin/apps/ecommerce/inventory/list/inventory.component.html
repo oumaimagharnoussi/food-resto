@@ -25,7 +25,12 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div  class="text-4xl font-extrabold tracking-tight">Products</div>
+        <div  class="text-4xl font-extrabold tracking-tight">Products
+           
+        </div>
+        <div *ngIf="products==null">
+            <mat-spinner diameter="40"></mat-spinner>
+        </div>
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
@@ -57,7 +62,7 @@
             (click)="showAddForm()"
             >
           
-            <span class="ml-2 mr-1">Hide</span>
+            <span class="ml-2 mr-1">Cancel</span>
         </button>
         </div>
     </div>
@@ -77,13 +82,13 @@
                             matSortDisableClear>
                             <div></div>
                             <div
-                                class="hidden md:block"
+                                class="hidden lg:block"
                                 [mat-sort-header]="'sku'">
-                                ID
+                                
                             </div>
                             <div [mat-sort-header]="'name'">Name</div>
                             <div
-                                class="hidden sm:block"
+                                class="hidden lg:block"
                                 [mat-sort-header]="'price'">
                                 Price
                             </div>
@@ -92,12 +97,8 @@
                                 [mat-sort-header]="'stock'">
                                 Stock
                             </div>
-                            <div
-                                class="hidden lg:block"
-                                [mat-sort-header]="'active'">
-                                Active
-                            </div>
-                            <div class="hidden sm:block">Details</div>
+                       
+                        
                         </div>
                         <!-- Rows -->
                         <ng-container >
@@ -114,23 +115,23 @@
                                         </div>
                                     </div>
 
-                                    <!-- SKU -->
-                                    <div class="hidden md:block truncate">
-                                       {{p.id}}
-                                    </div>
-
+                           
+                                         <!-- Name -->
+                                         <div class="hidden sm:block">
+   
+                                        </div>
                                     <!-- Name -->
-                                    <div class="truncate">
+                                    <div class="hidden sm:block">
                                         {{p.name}}
                                     </div>
 
                                     <!-- Price -->
                                     <div class="hidden sm:block">
-                                       {{p.unitPrice}}
+                                       {{p.unitPrice}} $
                                     </div>
 
                                     <!-- Stock -->
-                                    <div class="hidden lg:flex items-center">
+                                    <div class="hidden lg:flex ">
                                         <div class="min-w-4">{{p.stock}}</div>
                                         <!-- Low stock -->
                                         <div *ngIf="p.seuil>p.stock"
@@ -152,29 +153,8 @@
                                         </div>
                                     </div>
 
-                                    <!-- Active -->
-                                    <div class="hidden lg:block">
-                                        <ng-container>
-                                            <mat-icon
-                                                class="text-green-400 icon-size-5"
-                                                [svgIcon]="'heroicons_solid:check'"></mat-icon>
-                                        </ng-container>
-                                        <ng-container >
-                                            <mat-icon
-                                                class="text-gray-400 icon-size-5"
-                                                [svgIcon]="'heroicons_solid:x'"></mat-icon>
-                                        </ng-container>
-                                    </div>
-                                    
-                                    <!-- Details button -->
-                                    <div>
-                                        <button
-                                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
-                                            mat-stroked-button
-                                      >
-                                      <mat-icon svgIcon="heroicons_solid:arrow-right"></mat-icon>
-                                        </button>
-                                    </div>
+                               
+                               
                                 </div>
                                 <div class="grid">
                                   

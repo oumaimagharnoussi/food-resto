@@ -43,34 +43,31 @@
                             <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
                             <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
                           </mat-form-field>
+
+                          <mat-form-field appearance="fill">
+                            <mat-label>Filter</mat-label>
+                            <mat-select >
+                              <mat-option checked value="option1">All</mat-option>
+                              <mat-option value="option2" >Accepted</mat-option>
+                              <mat-option value="option3">On delivery</mat-option>
+                              <mat-option value="option4">Delivered</mat-option>
+                              <mat-option value="option4">Canceled</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="fill">
+                            <mat-label>Type</mat-label>
+                            <mat-select >
+                                <mat-option checked value="option1">All</mat-option>
+                              <mat-option checked value="option1">Delivery</mat-option>
+                              <mat-option value="option2" >Takeaway</mat-option>
+                          
+                            </mat-select>
+                          </mat-form-field>
                         
                     </div>
 
                 </div>
-                <div class="mt-2 pl-6 space-x-8 w-max sm:mt-0">
-
-                          
-                    <mat-form-field appearance="fill">
-                        <mat-label>Filter</mat-label>
-                        <mat-select >
-                          <mat-option checked value="option1">All</mat-option>
-                          <mat-option value="option2" >Accepted</mat-option>
-                          <mat-option value="option3">On delivery</mat-option>
-                          <mat-option value="option4">Delivered</mat-option>
-                          <mat-option value="option4">Canceled</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                      <mat-form-field appearance="fill">
-                        <mat-label>Type</mat-label>
-                        <mat-select >
-                            <mat-option checked value="option1">All</mat-option>
-                          <mat-option checked value="option1">Delivery</mat-option>
-                          <mat-option value="option2" >Takeaway</mat-option>
-                      
-                        </mat-select>
-                      </mat-form-field>
-              
-                </div>
+             
                 <!-- Tasks list -->
                 <ng-container >
                     <div
@@ -107,21 +104,21 @@
                                         class="flex flex-auto items-center min-w-0 h-full pr-7"
                                        >
                                         <!-- Title & Placeholder -->
-                                        <div class="flex-auto mr-2 truncate">
+                                        <div class="flex-auto mr-2 truncate ">
                                             <ng-container >
                                                 <span>Order ID</span>
                                             </ng-container>
                                          
                                         </div>
 
-                                        <div class="flex-auto mr-10 truncate">
+                                        <div class="flex-auto mr-10 truncate ">
                                             <ng-container >
                                                 <span>Order Date</span>
                                             </ng-container>
                                       
                                         </div>
 
-                                        <div class="flex-auto mr-2 truncate">
+                                        <div class="flex-auto mr-2 truncate ">
                                             <ng-container >
                                                 <span>Customer</span>
                                             </ng-container>
@@ -135,7 +132,7 @@
                                           
                                         </div>
 
-                                        <div class="flex-auto mr-2 truncate">
+                                        <div class="flex-auto mr-2 truncate ">
                                             <ng-container >
                                                 
                                                 <span>Status</span>

@@ -31,27 +31,9 @@
                     class="flex flex-col w-full"
                   >
 
-                  <div class="flex flex-col sm:flex-row p-2">
+                  <div class="p-2">
 
-                    <!-- Product images and status -->
-                    <div class="flex flex-col items-center sm:items-center mb-8 sm:mb-0">
-                        <div class=" relative flex flex-0  flex-col items-center">
-                            <div class=" border items-center justify-center  rounded overflow-hidden">
-                              <img *ngIf="product.image?.filePath" class=" h-32 items-center justify-center"  [src]="'https://food.dev.confledis.fr/media/'+product.image.filePath">
-                              <img *ngIf="!product.image?.filePath" class=" h-32 items-center justify-center" src="https://luigispizzakenosha.com/wp-content/uploads/placeholder.png">
-                              
-                            </div>
-                      
-                        </div>
-                        <div class="flex flex-col mt-8">
-                            <span class="font-semibold mb-2">Product status</span>
-                            <mat-slide-toggle
-                             
-                                [color]="'primary'">
-                              
-                            </mat-slide-toggle>
-                        </div>
-                    </div>
+                
         
                     <div class="flex flex-auto flex-wrap">
                         <!-- Name, SKU & etc. -->
@@ -124,10 +106,33 @@
                    
         
                     </div>
+
+                        <!-- Product images and status -->
+                        <div class="sm:items-center mb-8 sm:mb-0">
+                            <div class="">
+                                <div class="">
+                                    <form [formGroup] = "uploadForm" (ngSubmit)="onSubmit()">      
+                                        <div>
+                                          <input type="file" name="profile" (change)="onFileSelect($event)" />
+                                        </div>
+                                        <div>
+                                            <img *ngIf="filepath.length==0" class="h-32 w-32" src="https://luigispizzakenosha.com/wp-content/uploads/placeholder.png">
+                                            <img *ngIf="filepath.length>0"  class="h-32 w-32"   [src]="'https://food.dev.confledis.fr/media/'+filepath">
+                                       
+                                        </div>
+                                        <div class="float-right">
+                                          <button type="submit">Upload</button>
+                                        </div>
+                                      </form>
+                                </div>
+                          
+                            </div>
+                           
+                        </div>
         
                 </div>
 
-                    <div class="flex items-center justify-between w-full border-t px-8 py-4">
+                    <div class="flex items-center justify-between w-full border-t py-4">
                         <button
                             class="-ml-4"
                             mat-button

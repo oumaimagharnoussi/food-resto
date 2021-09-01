@@ -51,7 +51,7 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
 
     add:boolean=false
     drawerMode: 'side' | 'over';
-    products:any=[]
+    products:any=null
 
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
