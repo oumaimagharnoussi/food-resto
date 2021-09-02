@@ -17,8 +17,9 @@
                 <ng-container *ngIf="!taskForm.get('completed').value">
                     <div class="flex items-center justify-center">
                         <mat-icon [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
-                        <span class="ml-2 font-semibold">MARK AS COMPLETE</span>
+                        <span class="ml-2 font-semibold">MARK AS PREPARED</span>
                     </div>
+                   
                 </ng-container>
 
                 <!-- Mark as incomplete -->
@@ -29,9 +30,12 @@
                             [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
                         <span class="ml-2 font-semibold">MARK AS INCOMPLETE</span>
                     </div>
+
+                                   
                 </ng-container>
             </button>
-
+            <div class="border-2 rounded-lg text-center font-semibold p-2 border-green-500 text-green-600 border-opacity-75"> ACCEPTED</div>
+                        
             <div class="flex items-center">
                 <!-- More menu -->
                 <button
@@ -44,7 +48,7 @@
                         mat-menu-item
                         (click)="deleteTask()">
                         <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                        <span>Delete {{task.type === 'task' ? 'task' : 'section'}}</span>
+                        <span>Cancel order</span>
                     </button>
                 </mat-menu>
 
@@ -58,8 +62,56 @@
 
         </div>
 
-        <mat-divider class="mt-6 mb-8"></mat-divider>
+        <mat-divider class="mt-2 mb-2"></mat-divider>
+        <div class="flex flex-row gap-3 flex-col">
+            <div class="w-1/3">
+                <label class="text-lg font-semibold text-gray-400 mr-2">Order ID</label>
+            </div>
+            <div class="">
+                <label class="text-lg ">44445-55559</label>
+            </div>
+            <mat-divider class="mt-1 mb-1"></mat-divider>
+            <div>
+                <label class="text-lg text-gray-400 font-semibold mr-2">Order date</label>
+            </div>
+            <div>
+                <label class="text-lg">17/02/2021 14:08 AM</label>
+            </div>
+            <mat-divider class="mt-1 mb-1"></mat-divider>
+            <div>
+                <label class="text-lg text-gray-400 font-semibold mr-2">Customer</label>
+            </div>
+            <div>
+                <label class="text-lg">Alaa Assali</label> <br>
+                <label class="text-lg">+216 97 629 719</label> <br>
+                <label class="text-lg">Rue de marseille apt38 cité ezzouhour, Kasserine</label>
+            </div>
+            <mat-divider class="mt-1 mb-1"></mat-divider>
+            <div>
+                <label class="text-lg text-gray-400 font-semibold mr-2">Items</label>
+            </div>
+            <div>
+                <button class="bg-blue-100 rounded-lg  p-2">
+                    <label class="text-lg">show details ></label> 
+                </button>
+                
+            
+            </div>
+            <mat-divider class="mt-1 mb-1"></mat-divider>
+            <div>
+                <label class="text-lg text-gray-400 font-semibold mr-2">Order notes</label>
+            </div>
+            <div>
+               
+                    <label class="text-lg"> Don't add cheese to the burger </label> 
+               
+                
+            
+            </div>
+             
+        </div>
 
+      
      
 
     </form>
