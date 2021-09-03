@@ -44,22 +44,14 @@
                             <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
                           </mat-form-field>
 
-                          <mat-form-field appearance="fill">
-                            <mat-label>Filter</mat-label>
-                            <mat-select >
-                              <mat-option checked value="option1">All</mat-option>
-                              <mat-option value="option2" >Accepted</mat-option>
-                              <mat-option value="option3">On delivery</mat-option>
-                              <mat-option value="option4">Delivered</mat-option>
-                              <mat-option value="option4">Canceled</mat-option>
-                            </mat-select>
-                          </mat-form-field>
+                       
+            
                           <mat-form-field appearance="fill">
                             <mat-label>Type</mat-label>
-                            <mat-select >
-                                <mat-option checked value="option1">All</mat-option>
-                              <mat-option checked value="option1">Delivery</mat-option>
-                              <mat-option value="option2" >Takeaway</mat-option>
+                            <mat-select value="all">
+                                <mat-option (click)="allTypes()"   value="all">All</mat-option>
+                              <mat-option (click)="showDelivery()"  value="delivery">Delivery</mat-option>
+                              <mat-option (click)="showTakeaway()" value="takeaway" >Takeaway</mat-option>
                           
                             </mat-select>
                           </mat-form-field>
@@ -70,6 +62,23 @@
              
                 <!-- Tasks list -->
                 <ng-container >
+                    <div class="ml-2" style='border-bottom: 2px solid #eaeaea'>
+                        <ul class='flex cursor-pointer space-x-2'>
+                          <li (click)="showAll()" *ngIf="show.all" class='py-2 px-6 bg-gray-400 rounded-t-lg'>All</li>
+                          <li  (click)="showAll()"  *ngIf="!show.all" class='py-2 px-6 bg-gray-200 rounded-t-lg'>All</li>
+                          <li (click)="showPending()"  *ngIf="!show.pending" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-200'>PENDING</li>
+                          <li (click)="showPending()"  *ngIf="show.pending" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-400'>PENDING</li>
+                          <li  (click)="showAccepted()" *ngIf="!show.accepted" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-200'>ACCEPTED</li>
+                          <li  (click)="showAccepted()" *ngIf="show.accepted" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-400'>ACCEPTED</li>
+                          <li  (click)="showRejected()" *ngIf="!show.rejected" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-200'>REJECTED</li>
+                          <li  (click)="showRejected()" *ngIf="show.rejected" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-400'>REJECTED</li>
+                          <li (click)="showPrepared()"  *ngIf="!show.prepared" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-200'>PREPARED</li>
+                          <li  (click)="showPrepared()" *ngIf="show.prepared" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-400'>PREPARED</li>
+                          <li  (click)="showDelivered()" *ngIf="!show.delivered" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-200'>DELIVERED</li>
+                          <li  (click)="showDelivered()" *ngIf="show.delivered" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-400'>DELIVERED</li>
+                        </ul>
+                    </div>
+
                     <div
                         class="divide-y"
                         cdkDropList
@@ -148,7 +157,7 @@
                             </div>
                         </ng-container>
 
-                        <ng-container >
+                        <ng-container *ngFor="let order of orders" >
                             <div
                                 id="0fcece82-1691-4b98-a9b9-b63218f9deef"
                                 class="group w-full select-none hover:bg-gray-100 dark:hover:bg-hover"
@@ -161,7 +170,7 @@
                              
 
                                 <!-- Task content -->
-                                <div class="relative flex items-center h-full pl-10">
+                                <div  class="relative flex items-center h-full pl-10">
 
                                     
 
@@ -173,41 +182,44 @@
                                     <!-- Task link -->
                                     <a
                                         class="flex flex-auto items-center min-w-0 h-full pr-7"
-                                       routerLink="0fcece82-1691-4b98-a9b9-b63218f9deef">
+                                       [routerLink]="order.id">
                                         <!-- Title & Placeholder -->
                                         <div class="flex-auto mr-2 truncate">
                                             <ng-container >
-                                                <span>#1233456</span>
+                                                <span>{{order.orderId}}</span>
                                             </ng-container>
                                          
                                         </div>
 
                                         <div class="flex-auto mr-2 truncate">
                                             <ng-container >
-                                                <span>12/1120 09:21 AM</span>
+                                                <span> {{ order.date | date:'short' }}</span>
                                             </ng-container>
                                       
                                         </div>
 
                                         <div class="flex-auto mr-2 truncate">
                                             <ng-container >
-                                                <span>Ali Selmi</span>
+                                                <span> {{order.client?.firstName}} {{order.client?.lastName}} </span>
                                             </ng-container>
                                           
                                         </div>
 
                                         <div class="flex-auto mr-2 truncate">
                                             <ng-container >
-                                                <span>18 €</span>
+                                                <span>{{order.totalPrice}} €</span>
                                             </ng-container>
                                           
                                         </div>
 
-                                        <div class="flex-auto mr-2 truncate">
+                                        <div class="flex-auto  mr-2 truncate ">
                                             <ng-container >
                                                 
-                                                <div class="border-2 rounded-lg text-center border-red-500 text-red-500 border-opacity-75"> Canceled</div>
-                                               
+                                                <div *ngIf="order.status=='ORDERED'" class=" text-center border-gray-500 text-yellow-500 border-opacity-75"> PENDING</div>
+                                                <div *ngIf="order.status=='ACCEPTED'" class=" text-center border-blue-500 text-blue-500 border-opacity-75"> ACCEPTED</div>
+                                                <div *ngIf="order.status=='REJECTED'" class=" text-center border-red-500 text-red-500 border-opacity-75"> REJECTED</div>
+                                                <div *ngIf="order.status=='PREPARED'" class=" text-center border-yellow-500 text-gray-900 border-opacity-75"> PREPARED</div>
+                                                <div *ngIf="order.status=='DELIVERED'" class=" text-center border-green-500 text-green-500 border-opacity-75"> DELIVERED</div>
                                             </ng-container>
                                           
                                         </div>
@@ -219,298 +231,11 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <ng-container >
-                            <div
-                                id="0fcece82-1691-4b98-a9b9-b63218f9deef"
-                                class="group w-full select-none hover:bg-gray-100 dark:hover:bg-hover"
-                                [ngClass]="{'h-12 text-lg font-semibold dark:bg-transparent': true,
-                                            'h-16': true,
-                                            'text-hint': true}"
-                              
-                            >
-
-                             
-
-                                <!-- Task content -->
-                                <div class="relative flex items-center h-full pl-10">
-
-                                    
-
-                                 
-
-                                    <!-- Complete task button -->
-                                  
-
-                                    <!-- Task link -->
-                                    <a
-                                        class="flex flex-auto items-center min-w-0 h-full pr-7"
-                                       routerLink="0fcece82-1691-4b98-a9b9-b63218f9deef">
-                                        <!-- Title & Placeholder -->
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>#1233456</span>
-                                            </ng-container>
-                                         
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>12/1120 09:21 AM</span>
-                                            </ng-container>
-                                      
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>Ali Selmi</span>
-                                            </ng-container>
-                                          
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>24 €</span>
-                                            </ng-container>
-                                          
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                
-                                                <div class="border-2 rounded-lg text-center border-green-500 text-green-500 border-opacity-75"> Delivered</div>
-                                               
-                                            </ng-container>
-                                          
-                                        </div>
-                                        <!-- Priority -->
-                                      
-                                        <!-- Due date -->
-                                      
-                                    </a>
-                                </div>
-                            </div>
-                        </ng-container>
-                        <ng-container >
-                            <div
-                                id="0fcece82-1691-4b98-a9b9-b63218f9deef"
-                                class="group w-full select-none hover:bg-gray-100 dark:hover:bg-hover"
-                                [ngClass]="{'h-12 text-lg font-semibold dark:bg-transparent': true,
-                                            'h-16': true,
-                                            'text-hint': true}"
-                              
-                            >
-
-                             
-
-                                <!-- Task content -->
-                                <div class="relative flex items-center h-full pl-10">
-
-                                    
-
-                                 
-
-                                    <!-- Complete task button -->
-                                  
-
-                                    <!-- Task link -->
-                                    <a
-                                        class="flex flex-auto items-center min-w-0 h-full pr-7"
-                                       routerLink="0fcece82-1691-4b98-a9b9-b63218f9deef">
-                                        <!-- Title & Placeholder -->
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>#1233456</span>
-                                            </ng-container>
-                                         
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>12/1120 09:21 AM</span>
-                                            </ng-container>
-                                      
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>Ali Selmi</span>
-                                            </ng-container>
-                                          
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>24 €</span>
-                                            </ng-container>
-                                          
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                
-                                                <div class="border-2 rounded-lg text-center border-primary-500 text-primary-500 border-opacity-75"> Accepted</div>
-                                               
-                                            </ng-container>
-                                          
-                                        </div>
-                                        <!-- Priority -->
-                                      
-                                        <!-- Due date -->
-                                      
-                                    </a>
-                                </div>
-                            </div>
-                        </ng-container>
-                        <ng-container >
-                            <div
-                                id="0fcece82-1691-4b98-a9b9-b63218f9deef"
-                                class="group w-full select-none hover:bg-gray-100 dark:hover:bg-hover"
-                                [ngClass]="{'h-12 text-lg font-semibold dark:bg-transparent': true,
-                                            'h-16': true,
-                                            'text-hint': true}"
-                              
-                            >
-
-                             
-
-                                <!-- Task content -->
-                                <div class="relative flex items-center h-full pl-10">
-
-                                    
-
-                                 
-
-                                    <!-- Complete task button -->
-                                  
-
-                                    <!-- Task link -->
-                                    <a
-                                        class="flex flex-auto items-center min-w-0 h-full pr-7"
-                                       routerLink="0fcece82-1691-4b98-a9b9-b63218f9deef">
-                                        <!-- Title & Placeholder -->
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>#1233456</span>
-                                            </ng-container>
-                                         
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>12/1120 09:21 AM</span>
-                                            </ng-container>
-                                      
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>Ali Selmi</span>
-                                            </ng-container>
-                                          
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>24 €</span>
-                                            </ng-container>
-                                          
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                
-                                                <div class="border-2 rounded-lg text-center border-gray-800 text-gray-800 border-opacity-75"> On delivery</div>
-                                               
-                                            </ng-container>
-                                          
-                                        </div>
-                                        <!-- Priority -->
-                                      
-                                        <!-- Due date -->
-                                      
-                                    </a>
-                                </div>
-                            </div>
-                        </ng-container>
-
-                        <ng-container >
-                            <div
-                                id="0fcece82-1691-4b98-a9b9-b63218f9deef"
-                                class="group w-full select-none hover:bg-gray-100 dark:hover:bg-hover"
-                                [ngClass]="{'h-12 text-lg font-semibold dark:bg-transparent': true,
-                                            'h-16': true,
-                                            'text-hint': true}"
-                              
-                            >
-
-                             
-
-                                <!-- Task content -->
-                                <div class="relative flex items-center h-full pl-10">
-
-                                    
-
-                                 
-
-                                    <!-- Complete task button -->
-                                  
-
-                                    <!-- Task link -->
-                                    <a
-                                        class="flex flex-auto items-center min-w-0 h-full pr-7"
-                                       routerLink="0fcece82-1691-4b98-a9b9-b63218f9deef">
-                                        <!-- Title & Placeholder -->
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>#1233456</span>
-                                            </ng-container>
-                                         
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>12/1120 09:21 AM</span>
-                                            </ng-container>
-                                      
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>Ali Selmi</span>
-                                            </ng-container>
-                                          
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                <span>24 €</span>
-                                            </ng-container>
-                                          
-                                        </div>
-
-                                        <div class="flex-auto mr-2 truncate">
-                                            <ng-container >
-                                                
-                                                <div class="border-2 rounded-lg text-center border-yellow-700 text-yellow-700 border-opacity-75"> Prepared</div>
-                                               
-                                            </ng-container>
-                                          
-                                        </div>
-                                        <!-- Priority -->
-                                      
-                                        <!-- Due date -->
-                                      
-                                    </a>
-                                </div>
-                            </div>
-                        </ng-container>
+                      
                     </div>
 
                 </ng-container>
 
-                <ng-template #noTasks>
-                   
-                </ng-template>
 
             </div>
 

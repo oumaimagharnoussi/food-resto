@@ -11,6 +11,9 @@ import * as moment from 'moment';
 import { Tag, Task } from 'app/modules/admin/apps/tasks/tasks.types';
 import { TasksListComponent } from 'app/modules/admin/apps/tasks/list/list.component';
 import { TasksService } from 'app/modules/admin/apps/tasks/tasks.service';
+import { OrderService } from '../services/order.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductDetailComponent } from '../product-detail/product-detail.component';
 
 @Component({
     selector       : 'tasks-details',
@@ -33,7 +36,9 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
     private _tagsPanelOverlayRef: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     productId: any;
-
+    id: any;
+    order: any;
+    panelOpenState = false;
     /**
      * Constructor
      */
@@ -46,11 +51,25 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
         private _tasksListComponent: TasksListComponent,
         private _tasksService: TasksService,
         private _overlay: Overlay,
-        private _viewContainerRef: ViewContainerRef
+        private _viewContainerRef: ViewContainerRef,
+        private _orderSerice:OrderService,
+        public dialog: MatDialog
     )
     {
-
+        this.id=this.getId(window.location.pathname)
     }
+
+    getId(ch){
+        let index=0;
+        for(let i=0; i< ch.length;i++){
+          if(ch[i]=='/'){
+            index=i
+          }
+          
+  
+        }
+        return ch.substring(index+1,ch.length)
+      }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -61,92 +80,18 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
      */
     ngOnInit(): void
     {
+        this._orderSerice.getOrder(this.id).subscribe(
+            res=>{
+                console.log(res)
+                this.order=res
+                  // Mark for check
+                 this._changeDetectorRef.markForCheck();
+            }
+        )
         // Open the drawer
         this._tasksListComponent.matDrawer.open();
 
-        // Create the task form
-        this.taskForm = this._formBuilder.group({
-            id       : [''],
-            type     : [''],
-            title    : [''],
-            notes    : [''],
-            completed: [false],
-            dueDate  : [null],
-            priority : [0],
-            tags     : [[]],
-            order    : [0]
-        });
 
-        // Get the tags
-        this._tasksService.tags$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tags: Tag[]) => {
-                this.tags = tags;
-                this.filteredTags = tags;
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
-
-        // Get the tasks
-        this._tasksService.tasks$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tasks: Task[]) => {
-                this.tasks = tasks;
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
-
-        // Get the task
-        this._tasksService.task$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((task: Task) => {
-
-                // Open the drawer in case it is closed
-                this._tasksListComponent.matDrawer.open();
-
-                // Get the task
-                this.task = task;
-
-                // Patch values to the form from the task
-                this.taskForm.patchValue(task, {emitEvent: false});
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
-
-        // Update task when there is a value change on the task form
-        this.taskForm.valueChanges
-            .pipe(
-                tap((value) => {
-
-                    // Update the task object
-                    this.task = assign(this.task, value);
-                }),
-                debounceTime(300),
-                takeUntil(this._unsubscribeAll)
-            )
-            .subscribe((value) => {
-
-                // Update the task on the server
-                this._tasksService.updateTask(value.id, value).subscribe();
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
-
-        // Listen for NavigationEnd event to focus on the title field
-        this._router.events
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                filter(event => event instanceof NavigationEnd)
-            )
-            .subscribe(() => {
-
-                // Focus on the title field
-                this._titleField.nativeElement.focus();
-            });
     }
 
     /**
@@ -154,17 +99,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
      */
     ngAfterViewInit(): void
     {
-        // Listen for matDrawer opened change
-        this._tasksListComponent.matDrawer.openedChange
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                filter(opened => opened)
-            )
-            .subscribe(() => {
-
-                // Focus on the title element
-                this._titleField.nativeElement.focus();
-            });
+       
     }
 
     /**
@@ -186,6 +121,33 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+    acceptOrder() {     
+        this._orderSerice.updateOrder(this.order.id, { status: 'ACCEPTED', datePriseEncharge: new Date()}).subscribe((data: any) => {
+            this._tasksListComponent.getOrders()
+            this._tasksListComponent.onBackdropClicked()
+        })
+      }
+      rejectOrder() {
+        this._orderSerice.updateOrder(this.order.id, { status: 'REJECTED' }).subscribe((data: any) => {
+            this._tasksListComponent.getOrders()
+            this._tasksListComponent.onBackdropClicked()
+        })
+      }
+
+      prepareOrder() {
+        this._orderSerice.updateOrder(this.order.id, { status: 'PREPARED' }).subscribe((data: any) => {
+            this._tasksListComponent.getOrders()
+            this._tasksListComponent.onBackdropClicked()
+        })
+      }
+
+      openDialog(product) {
+        this.dialog.open(ProductDetailComponent, {
+          data: {
+            product: product
+          }
+        });
+      }
 
     /**
      * Close the drawer

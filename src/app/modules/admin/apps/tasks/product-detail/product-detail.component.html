@@ -1,0 +1,9 @@
+
+<h1 class="text-xl font-semibold" mat-dialog-title>{{data.product.name}} ({{data.product.unitPrice}}$)</h1>
+<div mat-dialog-content>
+    <p>
+        {{data.product.description}}
+    </p>
+  <img class="h-24  mt-5" [src]="'https://food.dev.confledis.fr/media/'+data.product.image?.filePath">
+
+</div>

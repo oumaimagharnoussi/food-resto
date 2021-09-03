@@ -2,7 +2,7 @@
 
     <form
         class="flex flex-col flex-auto p-6 pt-10 sm:p-8 sm:pt-10 overflow-y-auto"
-        [formGroup]="taskForm">
+        >
 
         <!-- Header -->
         <div class="flex items-center justify-between -mt-3 -ml-4">
@@ -14,42 +14,51 @@
                 (click)="toggleCompleted()">
 
                 <!-- Mark as complete -->
-                <ng-container *ngIf="!taskForm.get('completed').value">
-                    <div class="flex items-center justify-center">
-                        <mat-icon [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
-                        <span class="ml-2 font-semibold">MARK AS PREPARED</span>
-                    </div>
+                <ng-container >
+                    <div class="flex  items-center justify-center">
+                      
+                        <span *ngIf="order.status=='ORDERED'" class="ml-2 font-semibold">PENDING</span>
+                        <span *ngIf="order.status=='ACCEPTED'" class="ml-2 font-semibold text-blue-500">ACCEPTED</span>
+                        <span *ngIf="order.status=='PREPARED'" class="ml-2 font-semibold text-gray-900">PREPARED</span>
+                        <span *ngIf="order.status=='DELIVERED'" class="ml-2 font-semibold text-red-500">DELIVERED</span>
+                        <span *ngIf="order.status=='REJECTED'" class="ml-2 font-semibold text-red-500">REJECTED</span>
+                    </div> 
                    
                 </ng-container>
 
-                <!-- Mark as incomplete -->
-                <ng-container *ngIf="taskForm.get('completed').value">
-                    <div class="flex items-center justify-center">
-                        <mat-icon
-                            class="text-primary"
-                            [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
-                        <span class="ml-2 font-semibold">MARK AS INCOMPLETE</span>
-                    </div>
+               
 
-                                   
-                </ng-container>
+           
             </button>
-            <div class="border-2 rounded-lg text-center font-semibold p-2 border-green-500 text-green-600 border-opacity-75"> ACCEPTED</div>
-                        
+        
             <div class="flex items-center">
                 <!-- More menu -->
-                <button
+                <button *ngIf="order.status!='REJECTED' && order.status!='DELIVERED'"
                     mat-icon-button
                     [matMenuTriggerFor]="moreMenu">
-                    <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
+                   <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
                 </button>
-                <mat-menu #moreMenu="matMenu">
-                    <button
+                <mat-menu #moreMenu="matMenu" >
+                    <button *ngIf="order.status=='ORDERED'"
                         mat-menu-item
-                        (click)="deleteTask()">
+                        (click)="acceptOrder()">
                         <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                        <span>Cancel order</span>
+                        <span>Accept order</span>
                     </button>
+
+                    <button *ngIf="order.status=='ORDERED'"
+                        mat-menu-item
+                        (click)="rejectOrder()">
+                        <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                        <span>Reject order</span>
+                    </button>
+
+                    <button *ngIf="order.status=='ACCEPTED'"
+                    mat-menu-item
+                    (click)="prepareOrder()">
+                    <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                    <span>Set to prepared</span>
+                </button>
                 </mat-menu>
 
                 <!-- Close button -->
@@ -68,32 +77,71 @@
                 <label class="text-lg font-semibold text-gray-400 mr-2">Order ID</label>
             </div>
             <div class="">
-                <label class="text-lg ">44445-55559</label>
+                <label class="text-lg ">{{order?.orderId}}</label>
             </div>
             <mat-divider class="mt-1 mb-1"></mat-divider>
             <div>
                 <label class="text-lg text-gray-400 font-semibold mr-2">Order date</label>
             </div>
             <div>
-                <label class="text-lg">17/02/2021 14:08 AM</label>
+                <label class="text-lg">{{ order.date | date:'short' }}</label>
             </div>
             <mat-divider class="mt-1 mb-1"></mat-divider>
             <div>
                 <label class="text-lg text-gray-400 font-semibold mr-2">Customer</label>
             </div>
             <div>
-                <label class="text-lg">Alaa Assali</label> <br>
-                <label class="text-lg">+216 97 629 719</label> <br>
+                <label class="text-lg">{{order.client?.firstName}} {{order.client?.lastName}} </label> <br>
+                <label class="text-lg">{{order.client?.telephone}}</label> <br>
                 <label class="text-lg">Rue de marseille apt38 cité ezzouhour, Kasserine</label>
             </div>
             <mat-divider class="mt-1 mb-1"></mat-divider>
             <div>
-                <label class="text-lg text-gray-400 font-semibold mr-2">Items</label>
+                <label class="text-lg text-gray-400 font-semibold mr-2">Total ( {{order.totalPrice}} $ )</label>
             </div>
             <div>
-                <button class="bg-blue-100 rounded-lg  p-2">
-                    <label class="text-lg">show details ></label> 
-                </button>
+                <mat-accordion>
+             
+                    <mat-expansion-panel (opened)="panelOpenState = true"
+                                         (closed)="panelOpenState = false">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{order.lineItems.length}} items
+                        </mat-panel-title>
+                        <mat-panel-description>
+                         {{panelOpenState ? 'hide' : 'show'}} 
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      <div class="flex text-xl">
+                        
+                        <div class="w-2/4">
+                          Product
+                        </div>
+                        <div class="w-1/4">
+                          Count
+                        </div>
+                        <div class="w-1/4">
+                          Total
+                        </div>
+                  
+                    </div>   
+                    <mat-divider></mat-divider>                  
+                      <div (click)="openDialog(item.product)" class=" text-xl text-gray-800 flex select-none hover:bg-gray-100 dark:hover:bg-hover" *ngFor="let item of order?.lineItems">
+                          
+                          <div class="w-2/4">
+                            {{item.product.name}}
+                          </div>
+                          <div class="w-1/4">
+                            {{item.quantity}}
+                          </div>
+                          <div class="w-1/4">
+                            {{item.total}} $
+                          </div>
+                    
+                      </div>
+
+                    </mat-expansion-panel>
+                  </mat-accordion>
                 
             
             </div>

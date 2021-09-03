@@ -22,6 +22,20 @@ export class TasksListComponent implements OnInit, OnDestroy
 {
     campaignOne: FormGroup;
     campaignTwo: FormGroup;
+    show: {
+        pending:boolean,
+        all:boolean,
+        prepared:boolean,
+        rejected:boolean,
+        delivered:boolean,
+        accepted:boolean
+    }
+
+    type: {
+        all:boolean,
+        delivery:boolean,
+        takeaway:boolean
+    }
     
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
 
@@ -34,6 +48,7 @@ export class TasksListComponent implements OnInit, OnDestroy
         total     : 0
     };
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    orders: any;
   
     /**
      * Constructor
@@ -48,7 +63,13 @@ export class TasksListComponent implements OnInit, OnDestroy
         private _fuseNavigationService: FuseNavigationService,
         private _orderService: OrderService
     )
-    {
+    { this.type={
+        all:true,
+        delivery:false,
+        takeaway:false
+    }
+        this.showAll()
+       
         const today = new Date();
         const month = today.getMonth();
         const year = today.getFullYear();
@@ -68,15 +89,24 @@ export class TasksListComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
-
+    getOrders(){
+        this._orderService.getOrders().subscribe(
+            res=>  {
+                this.orders=res
+                 // Mark for check
+                 this._changeDetectorRef.markForCheck();
+            }
+            
+           
+        )
+    }
     /**
      * On init
      */
     ngOnInit(): void
     {
-        this._orderService.getOrders().subscribe(
-            res=> console.log(res)
-        )
+       // this.getOrders()
+
         // Get the tags
      
 
@@ -109,7 +139,429 @@ export class TasksListComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+    showAll(){
+        this.show={all:true,pending:false,accepted:false,rejected:false,prepared:false,delivered:false}
+        if(this.type.all){
+            this._orderService.getOrders().subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
 
+        if(this.type.takeaway){
+            this._orderService.getOrders(null,'TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.delivery){
+            this._orderService.getOrders(null,'DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+    }
+    showPending(){
+        this.show={all:false,pending:true,accepted:false,rejected:false,prepared:false,delivered:false}
+        if(this.type.all){
+            this._orderService.getOrders('ORDERED').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.takeaway){
+            this._orderService.getOrders('ORDERED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.delivery){
+            this._orderService.getOrders('ORDERED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+    }
+    showRejected(){
+        this.show={all:false,pending:false,accepted:false,rejected:true,prepared:false,delivered:false}
+        if(this.type.all){
+            this._orderService.getOrders('REJECTED').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.takeaway){
+            this._orderService.getOrders('REJECTED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.delivery){
+            this._orderService.getOrders('REJECTED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+    }
+    showAccepted(){
+        this.show={all:false,pending:false,accepted:true,rejected:false,prepared:false,delivered:false}
+        if(this.type.all){
+            this._orderService.getOrders('ACCEPTED').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.takeaway){
+            this._orderService.getOrders('ACCEPTED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.delivery){
+            this._orderService.getOrders('ACCEPTED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+    }
+    showDelivered(){
+        this.show={all:false,pending:false,accepted:false,rejected:false,prepared:false,delivered:true}
+
+        if(this.type.all){
+            this._orderService.getOrders('DELIVERED').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.takeaway){
+            this._orderService.getOrders('DELIVERED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.delivery){
+            this._orderService.getOrders('DELIVERED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+    }
+    showPrepared(){
+        this.show={all:false,pending:false,accepted:false,rejected:false,prepared:true,delivered:false}
+        if(this.type.all){
+            this._orderService.getOrders('PREPARED').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.takeaway){
+            this._orderService.getOrders('PREPARED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.delivery){
+            this._orderService.getOrders('PREPARED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+    }
+    
+    showTakeaway(){
+        this.type={
+            all:false,
+            takeaway:true,
+            delivery:false
+        }
+        if(this.show.all){
+            this._orderService.getOrders(null,'TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.prepared){
+            this._orderService.getOrders('PREPARED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.pending){
+            this._orderService.getOrders('ORDERED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.rejected){
+            this._orderService.getOrders('REJECTED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.accepted){
+            this._orderService.getOrders('ACCEPTED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.delivered){
+            this._orderService.getOrders('DELIVERED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+
+    }
+
+    showDelivery(){
+        this.type={
+            all:false,
+            takeaway:false,
+            delivery:true
+        }
+        if(this.show.all){
+            this._orderService.getOrders(null,'DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.prepared){
+            this._orderService.getOrders('PREPARED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.pending){
+            this._orderService.getOrders('ORDERED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.rejected){
+            this._orderService.getOrders('REJECTED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.accepted){
+            this._orderService.getOrders('ACCEPTED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.delivered){
+            this._orderService.getOrders('DELIVERED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+
+    }
+
+    allTypes(){
+        this.type={
+            all:true,
+            takeaway:false,
+            delivery:false
+        }
+        if(this.show.all){
+            this._orderService.getOrders(null,null).subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.prepared){
+            this._orderService.getOrders('PREPARED',null).subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.pending){
+            this._orderService.getOrders('ORDERED',null).subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.rejected){
+            this._orderService.getOrders('REJECTED',null).subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.accepted){
+            this._orderService.getOrders('ACCEPTED',null).subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+        if(this.show.delivered){
+            this._orderService.getOrders('DELIVERED',null).subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+
+    }
     /**
      * On backdrop clicked
      */

@@ -16,16 +16,12 @@ export const tasksRoutes: Route[] = [
             {
                 path     : '',
                 component: TasksListComponent,
-                resolve  : {
-                    tasks: TasksResolver
-                },
+               
                 children : [
                     {
                         path         : ':id',
                         component    : TasksDetailsComponent,
-                        resolve      : {
-                            task: TasksTaskResolver
-                        },
+                   
                         canDeactivate: [CanDeactivateTasksDetails]
                     }
                 ]

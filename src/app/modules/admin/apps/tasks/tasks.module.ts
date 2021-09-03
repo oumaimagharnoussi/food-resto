@@ -24,12 +24,14 @@ import { tasksRoutes } from 'app/modules/admin/apps/tasks/tasks.routing';
 import { TasksComponent } from 'app/modules/admin/apps/tasks/tasks.component';
 import { TasksDetailsComponent } from 'app/modules/admin/apps/tasks/details/details.component';
 import { TasksListComponent } from 'app/modules/admin/apps/tasks/list/list.component';
-
+import {MatExpansionModule} from '@angular/material/expansion';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 @NgModule({
     declarations: [
         TasksComponent,
         TasksDetailsComponent,
-        TasksListComponent
+        TasksListComponent,
+        ProductDetailComponent
     ],
     imports     : [
         RouterModule.forChild(tasksRoutes),
@@ -51,7 +53,8 @@ import { TasksListComponent } from 'app/modules/admin/apps/tasks/list/list.compo
         MatSidenavModule,
         MatTooltipModule,
         FuseFindByKeyPipeModule,
-        SharedModule
+        SharedModule,
+        MatExpansionModule
     ],
     providers   : [
         {
