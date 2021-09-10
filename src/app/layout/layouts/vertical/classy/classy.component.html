@@ -1,18 +1,21 @@
 <!-- Navigation -->
 <fuse-vertical-navigation
-    class=" bg-gray-200 print:hidden"
+    class=" bg-gray-200 text-black print:hidden"
     [mode]="isScreenSmall ? 'over' : 'side'"
     [name]="'mainNavigation'"
     [navigation]="navigation.default"
     [opened]="!isScreenSmall">
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
-        <div class="flex items-center w-full p-4 pl-6">
+        <div class="flex items-center w-full  p-3 pl-6">
             <!-- Logo -->
             <div class="flex items-center justify-center">
                 <img
-                    class="w-8"
-                    src="assets/images/logo/logo.svg">
+                    class="w-12"
+                    src="assets/images/logo/logo.svg"> 
+                    <div class="pl-2 border-l text-md">
+                        <div class="text-gray-700 font-medium">CongoFood ©</div>
+                    </div>
             </div>
             <!-- Components -->
             <div class="flex items-center ml-auto">

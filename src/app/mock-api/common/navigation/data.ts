@@ -5,7 +5,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     {
         id      : 'dashboards',
         title   : 'Dashboards',
-        subtitle: 'Unique dashboard designs',
+        subtitle: 'Consult your business analytics',
         type    : 'group',
         icon    : 'heroicons_outline:home',
         children: [
@@ -28,7 +28,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     {
         id      : 'stocks',
         title   : 'Stock management',
-        subtitle: 'Custom made application designs',
+        subtitle: 'Manage your stocks',
         type    : 'group',
         icon    : 'heroicons_outline:home',
         children: [
@@ -57,7 +57,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     {
         id      : 'orders',
         title   : 'Order management',
-        subtitle: 'Custom made application designs',
+        subtitle: 'Manage your orders',
         type    : 'group',
         icon    : 'heroicons_outline:home',
         children: [
@@ -77,7 +77,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     {
         id      : 'reservations',
         title   : 'Reservation management',
-        subtitle: 'Custom made application designs',
+        subtitle: 'Manage your reservations',
         type    : 'group',
         icon    : 'heroicons_outline:home',
         children: [
