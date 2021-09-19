@@ -1,34 +1,21 @@
 <!-- Navigation -->
 <fuse-vertical-navigation
-    class=" bg-gray-200 text-black print:hidden"
+    class="dark bg-gray-900 print:hidden"
     [mode]="isScreenSmall ? 'over' : 'side'"
     [name]="'mainNavigation'"
     [navigation]="navigation.default"
     [opened]="!isScreenSmall">
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
-        <div class="flex items-center w-full  p-3 pl-6">
-            <!-- Logo -->
-            <div class="flex items-center justify-center">
-                <img
-                    class="w-12"
-                    src="assets/images/logo/logo.svg"> 
-                    <div class="pl-2 border-l text-md">
-                        <div class="text-gray-700 font-medium">CongoFood ©</div>
-                    </div>
-            </div>
-            <!-- Components -->
-            <div class="flex items-center ml-auto">
-                <notifications></notifications>
-                <user [showAvatar]="false"></user>
+        <!-- Logo -->
+        <div class="flex items-center h-20 p-6 pb-0">
+            <img
+            class="w-12"
+            src="assets/images/logo/logo.svg"> 
+            <div class="pl-2 border-l text-md">
+                <div class="text-white text-lg font-medium">CongoFood ©</div>
             </div>
         </div>
-        <!-- User -->
-     
-    </ng-container>
-    <!-- Navigation footer hook -->
-    <ng-container fuseVerticalNavigationContentFooter>
-       
     </ng-container>
 </fuse-vertical-navigation>
 
@@ -47,9 +34,10 @@
         <div class="flex items-center pl-2 ml-auto space-x-1 sm:space-x-2">
             <languages></languages>
             <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
-            <search [appearance]="'bar'"></search>
-            <shortcuts></shortcuts>
+            
             <messages></messages>
+            <notifications></notifications>
+            <user></user>
         </div>
     </div>
 
@@ -61,8 +49,8 @@
     </div>
 
     <!-- Footer -->
-    <!--<div class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
-        <span class="font-medium text-secondary">Fuse &copy; {{currentYear}}</span>
-    </div>-->
+    <div class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+        <span class="font-medium text-secondary">CongoFood &copy; {{currentYear}}</span>
+    </div>
 
 </div>

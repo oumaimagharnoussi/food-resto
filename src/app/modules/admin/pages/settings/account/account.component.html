@@ -12,7 +12,7 @@
             <!-- Name -->
             <div class="sm:col-span-4">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Name</mat-label>
+                    <mat-label>First name</mat-label>
                     <mat-icon
                         class="icon-size-5"
                         [svgIcon]="'heroicons_solid:user'"
@@ -22,24 +22,24 @@
                         matInput>
                 </mat-form-field>
             </div>
-            <!-- Username -->
+
             <div class="sm:col-span-4">
-                <mat-form-field class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full">
-                    <mat-label>Username</mat-label>
-                    <div
-                        class="text-secondary"
-                        matPrefix>
-                        fusetheme.com/
-                    </div>
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Last name</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:user'"
+                        matPrefix></mat-icon>
                     <input
-                        [formControlName]="'username'"
+                        [formControlName]="'name'"
                         matInput>
                 </mat-form-field>
             </div>
+
             <!-- Title -->
             <div class="sm:col-span-2">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Title</mat-label>
+                    <mat-label>Restaurant name</mat-label>
                     <mat-icon
                         class="icon-size-5"
                         [svgIcon]="'heroicons_solid:briefcase'"
@@ -52,7 +52,7 @@
             <!-- Company -->
             <div class="sm:col-span-2">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Company</mat-label>
+                    <mat-label>Speciality</mat-label>
                     <mat-icon
                         class="icon-size-5"
                         [svgIcon]="'heroicons_solid:office-building'"
@@ -65,14 +65,14 @@
             <!-- About -->
             <div class="sm:col-span-4">
                 <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full">
-                    <mat-label>About</mat-label>
+                    <mat-label>Description</mat-label>
                     <textarea
                         matInput
                         [formControlName]="'about'"
                         matTextareaAutosize
                         [matAutosizeMinRows]="5"></textarea>
                 </mat-form-field>
-                <div class="mt-1 text-md text-hint">Brief description for your profile. Basic HTML and Emoji are allowed.</div>
+                <div class="mt-1 text-md text-hint">Brief description for your restaurant.</div>
             </div>
         </div>
 

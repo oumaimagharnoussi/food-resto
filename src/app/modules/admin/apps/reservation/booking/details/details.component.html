@@ -1,0 +1,128 @@
+<div class="flex flex-auto">
+
+    <form
+        class="flex flex-col flex-auto p-6 pt-10 sm:p-8 sm:pt-10 overflow-y-auto"
+        >
+
+        <!-- Header -->
+        <div class="flex items-center justify-between -mt-3 -ml-4">
+
+            <!-- Mark as ... button -->
+            <button
+                class="pr-4 pl-3.5"
+                mat-button
+              >
+
+                <!-- Mark as complete -->
+                <ng-container >
+                    <div class="flex  items-center justify-center">
+                      
+                        <span *ngIf="reservation?.status=='PENDING'" class="ml-2 font-semibold text-blue-500">PENDING</span>
+                        <span *ngIf="reservation?.status=='CONFIRMED'" class="ml-2 font-semibold text-green-500">ACCEPTED</span>
+                        <span *ngIf="reservation?.status=='CANCELED'" class="ml-2 font-semibold text-red-500">REJECTED</span>
+ 
+                    </div> 
+                   
+                   
+                </ng-container>
+
+               
+
+           
+            </button>
+            <a href="tel:1-562-867-5309"><button class="bg-blue-600 rounded-lg p-2 text-white">
+                Click to call 
+            </button></a>
+            
+        
+            <div class="flex items-center">
+                <!-- More menu -->
+                <button  *ngIf="reservation?.status=='PENDING'" 
+                    mat-icon-button
+                    [matMenuTriggerFor]="moreMenu">
+                   <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
+                </button>
+                <mat-menu #moreMenu="matMenu"  >
+                    <button  (click)="acceptReservation()"
+                        mat-menu-item
+                        >
+                       
+                        <span class="text-green-500 font-semibold">Accept</span>
+                    </button>
+
+                    <button  (click)="rejectReservation()"
+                        mat-menu-item
+                        >
+                      
+                        <span class="text-red-500 font-semibold">Reject</span>
+                    </button>
+
+                   
+                </mat-menu>
+
+                <!-- Close button -->
+                <button (click)="closeDrawer()"
+                    mat-icon-button
+                    [routerLink]="['../']">
+                    <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                </button>
+            </div>
+
+        </div>
+
+
+        <div class="flex flex-row gap-3 flex-col">
+            <div class="w-1/3">
+                <label class="text-lg font-semibold text-gray-400 mr-2">Reservation ID</label>
+            </div>
+            <div class="">
+                <label class="text-lg ">{{reservation?.reservationId}}</label>
+            </div>
+         
+            <div>
+                <label class="text-lg text-gray-400 font-semibold mr-2">Reservation date</label>
+            </div>
+            <div>
+                <label class="text-lg">{{ reservation?.dateReservation | date:'short' }}</label>
+            </div>
+    
+            <div>
+                <label class="text-lg text-gray-400 font-semibold mr-2">Customer</label>
+            </div>
+            <div>
+               
+                <label class="text-lg">{{reservation?.client.telephone}}</label>
+            </div>
+        
+            <div>
+                <label class="text-lg text-gray-400 font-semibold mr-2">Persons count</label>
+            </div>
+            <div>
+               
+                <label class="text-lg">{{reservation?.nbPersonnes}}</label>
+            </div>
+        
+        
+            <div>
+                <label class="text-lg text-gray-400 font-semibold mr-2">Notes</label>
+            </div>
+            <div>
+               
+                    <label class="text-lg"> {{reservation?.note}} </label> 
+               
+                
+            
+            </div>
+             
+        </div>
+
+        <div>
+
+        </div>
+
+   
+      
+
+    </form>
+
+</div>

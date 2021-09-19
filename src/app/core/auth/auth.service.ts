@@ -63,6 +63,19 @@ export class AuthService
         return localStorage.getItem('accessUser') ?? '';
     }
 
+    /**
+     * Setter & getter for userInfo
+     */
+     set accessUserInfo(user: string)
+     {
+         localStorage.setItem('infoUser', user);
+     }
+ 
+     get accessUserInfo(): string
+     {
+         return localStorage.getItem('infoUser') ?? '';
+     }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -112,6 +125,7 @@ export class AuthService
                 // Store the user on the user service
                 this._userService.user = response.data;
                 this.accessUser=response.data.id;
+                this.accessUserInfo=response.data.email
               
 
                 // Return a new observable with the response

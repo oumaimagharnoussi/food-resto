@@ -28,23 +28,7 @@
                        
                     </div>
                     <!-- Actions -->
-                    <div class="mt-2  space-x-8 w-max sm:mt-0">
-                                       
-                        <mat-form-field class="example-form-field" appearance="fill">
-                            <mat-label>From - To</mat-label>
-                            <mat-date-range-input
-                              [formGroup]="campaignOne"
-                              [rangePicker]="campaignOnePicker"
-                              [comparisonStart]="campaignTwo.value.start"
-                              [comparisonEnd]="campaignTwo.value.end">
-                              <input matStartDate placeholder="Start date" formControlName="start">
-                              <input matEndDate placeholder="End date" formControlName="end">
-                            </mat-date-range-input>
-                            <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-                            <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
-                          </mat-form-field>
-
-                       
+                    <div class="mt-2  space-x-8 w-max sm:mt-0">                    
             
                           <mat-form-field appearance="fill">
                             <mat-label>Type</mat-label>
@@ -143,8 +127,9 @@
                                                     {{order.totalPrice}} €
                                                 </div>
             
-                                                <!-- Stock -->
+                                                <!-- Status -->
                                                 <div >
+                                                    <img *ngIf="order.delivery && order.status!='DELIVERED'" class="h-8 w-8" src="https://www.clipartmax.com/png/full/67-676762_pizza-u0130skender-kebap-kebab-take-out-delivery-logo-giao-h%C3%A0ng.png">
                                                     <div *ngIf="order.status=='ORDERED'" class=" text-center border-gray-500 text-yellow-500 border-opacity-75"> PENDING</div>
                                                     <div *ngIf="order.status=='ACCEPTED'" class=" text-center border-blue-500 text-blue-500 border-opacity-75"> ACCEPTED</div>
                                                     <div *ngIf="order.status=='REJECTED'" class=" text-center border-red-500 text-red-500 border-opacity-75"> REJECTED</div>

@@ -15,6 +15,7 @@ import { UserService } from 'app/core/user/user.service';
 })
 export class UserComponent implements OnInit, OnDestroy
 {
+    email:String
     /* eslint-disable @typescript-eslint/naming-convention */
     static ngAcceptInputType_showAvatar: BooleanInput;
     /* eslint-enable @typescript-eslint/naming-convention */
@@ -33,6 +34,7 @@ export class UserComponent implements OnInit, OnDestroy
         private _userService: UserService
     )
     {
+        this.email=localStorage.getItem('infoUser')
     }
 
     // -----------------------------------------------------------------------------------------------------

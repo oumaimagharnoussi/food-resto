@@ -8,9 +8,9 @@ import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil, tap } from 'rxjs/operators';
 import { assign } from 'lodash-es';
 import * as moment from 'moment';
-import { Tag, Task } from 'app/modules/admin/apps/tasks/tasks.types';
+
 import { TasksListComponent } from 'app/modules/admin/apps/tasks/list/list.component';
-import { TasksService } from 'app/modules/admin/apps/tasks/tasks.service';
+
 import { OrderService } from '../services/order.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
@@ -27,9 +27,9 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
     @ViewChild('tagsPanel') private _tagsPanel: TemplateRef<any>;
     @ViewChild('titleField') private _titleField: ElementRef;
 
-    tags: Tag[];
+
     tagsEditMode: boolean = false;
-    filteredTags: Tag[];
+
     task: Task;
     taskForm: FormGroup;
     tasks: Task[];
@@ -49,7 +49,6 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
         private _renderer2: Renderer2,
         private _router: Router,
         private _tasksListComponent: TasksListComponent,
-        private _tasksService: TasksService,
         private _overlay: Overlay,
         private _viewContainerRef: ViewContainerRef,
         private _orderSerice:OrderService,
@@ -169,68 +168,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
         completedFormControl.setValue(!completedFormControl.value);
     }
 
-    /**
-     * Open tags panel
-     */
-    openTagsPanel(): void
-    {
-        // Create the overlay
-        this._tagsPanelOverlayRef = this._overlay.create({
-            backdropClass   : '',
-            hasBackdrop     : true,
-            scrollStrategy  : this._overlay.scrollStrategies.block(),
-            positionStrategy: this._overlay.position()
-                                  .flexibleConnectedTo(this._tagsPanelOrigin.nativeElement)
-                                  .withFlexibleDimensions(true)
-                                  .withViewportMargin(64)
-                                  .withLockedPosition(true)
-                                  .withPositions([
-                                      {
-                                          originX : 'start',
-                                          originY : 'bottom',
-                                          overlayX: 'start',
-                                          overlayY: 'top'
-                                      }
-                                  ])
-        });
 
-        // Subscribe to the attachments observable
-        this._tagsPanelOverlayRef.attachments().subscribe(() => {
-
-            // Focus to the search input once the overlay has been attached
-            this._tagsPanelOverlayRef.overlayElement.querySelector('input').focus();
-        });
-
-        // Create a portal from the template
-        const templatePortal = new TemplatePortal(this._tagsPanel, this._viewContainerRef);
-
-        // Attach the portal to the overlay
-        this._tagsPanelOverlayRef.attach(templatePortal);
-
-        // Subscribe to the backdrop click
-        this._tagsPanelOverlayRef.backdropClick().subscribe(() => {
-
-            // If overlay exists and attached...
-            if ( this._tagsPanelOverlayRef && this._tagsPanelOverlayRef.hasAttached() )
-            {
-                // Detach it
-                this._tagsPanelOverlayRef.detach();
-
-                // Reset the tag filter
-                this.filteredTags = this.tags;
-
-                // Toggle the edit mode off
-                this.tagsEditMode = false;
-            }
-
-            // If template portal exists and attached...
-            if ( templatePortal && templatePortal.isAttached )
-            {
-                // Detach it
-                templatePortal.detach();
-            }
-        });
-    }
 
     /**
      * Toggle the tags edit mode
@@ -240,177 +178,13 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
         this.tagsEditMode = !this.tagsEditMode;
     }
 
-    /**
-     * Filter tags
-     *
-     * @param event
-     */
-    filterTags(event): void
-    {
-        // Get the value
-        const value = event.target.value.toLowerCase();
+    
 
-        // Filter the tags
-        this.filteredTags = this.tags.filter(tag => tag.title.toLowerCase().includes(value));
-    }
 
-    /**
-     * Filter tags input key down event
-     *
-     * @param event
-     */
-    filterTagsInputKeyDown(event): void
-    {
-        // Return if the pressed key is not 'Enter'
-        if ( event.key !== 'Enter' )
-        {
-            return;
-        }
 
-        // If there is no tag available...
-        if ( this.filteredTags.length === 0 )
-        {
-            // Create the tag
-            this.createTag(event.target.value);
 
-            // Clear the input
-            event.target.value = '';
 
-            // Return
-            return;
-        }
 
-        // If there is a tag...
-        const tag = this.filteredTags[0];
-        const isTagApplied = this.task.tags.find(id => id === tag.id);
-
-        // If the found tag is already applied to the task...
-        if ( isTagApplied )
-        {
-            // Remove the tag from the task
-            this.deleteTagFromTask(tag);
-        }
-        else
-        {
-            // Otherwise add the tag to the task
-            this.addTagToTask(tag);
-        }
-    }
-
-    /**
-     * Create a new tag
-     *
-     * @param title
-     */
-    createTag(title: string): void
-    {
-        const tag = {
-            title
-        };
-
-        // Create tag on the server
-        this._tasksService.createTag(tag)
-            .subscribe((response) => {
-
-                // Add the tag to the task
-                this.addTagToTask(response);
-            });
-    }
-
-    /**
-     * Update the tag title
-     *
-     * @param tag
-     * @param event
-     */
-    updateTagTitle(tag: Tag, event): void
-    {
-        // Update the title on the tag
-        tag.title = event.target.value;
-
-        // Update the tag on the server
-        this._tasksService.updateTag(tag.id, tag)
-            .pipe(debounceTime(300))
-            .subscribe();
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-    }
-
-    /**
-     * Delete the tag
-     *
-     * @param tag
-     */
-    deleteTag(tag: Tag): void
-    {
-        // Delete the tag from the server
-        this._tasksService.deleteTag(tag.id).subscribe();
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-    }
-
-    /**
-     * Add tag to the task
-     *
-     * @param tag
-     */
-    addTagToTask(tag: Tag): void
-    {
-        // Add the tag
-        this.task.tags.unshift(tag.id);
-
-        // Update the task form
-        this.taskForm.get('tags').patchValue(this.task.tags);
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-    }
-
-    /**
-     * Delete tag from the task
-     *
-     * @param tag
-     */
-    deleteTagFromTask(tag: Tag): void
-    {
-        // Remove the tag
-        this.task.tags.splice(this.task.tags.findIndex(item => item === tag.id), 1);
-
-        // Update the task form
-        this.taskForm.get('tags').patchValue(this.task.tags);
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-    }
-
-    /**
-     * Toggle task tag
-     *
-     * @param tag
-     */
-    toggleTaskTag(tag: Tag): void
-    {
-        if ( this.task.tags.includes(tag.id) )
-        {
-            this.deleteTagFromTask(tag);
-        }
-        else
-        {
-            this.addTagToTask(tag);
-        }
-    }
-
-    /**
-     * Should the create tag button be visible
-     *
-     * @param inputValue
-     */
-    shouldShowCreateTagButton(inputValue: string): boolean
-    {
-        return !!!(inputValue === '' || this.tags.findIndex(tag => tag.title.toLowerCase() === inputValue.toLowerCase()) > -1);
-    }
 
     /**
      * Set the task priority
@@ -423,52 +197,8 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
         this.taskForm.get('priority').setValue(priority);
     }
 
-    /**
-     * Check if the task is overdue or not
-     */
-    isOverdue(): boolean
-    {
-        return moment(this.task.dueDate, moment.ISO_8601).isBefore(moment(), 'days');
-    }
 
-    /**
-     * Delete the task
-     */
-    deleteTask(): void
-    {
-        // Get the current task's id
-        const id = this.task.id;
 
-        // Get the next/previous task's id
-        const currentTaskIndex = this.tasks.findIndex(item => item.id === id);
-        const nextTaskIndex = currentTaskIndex + ((currentTaskIndex === (this.tasks.length - 1)) ? -1 : 1);
-        const nextTaskId = (this.tasks.length === 1 && this.tasks[0].id === id) ? null : this.tasks[nextTaskIndex].id;
-
-        // Delete the task
-        this._tasksService.deleteTask(id)
-            .subscribe((isDeleted) => {
-
-                // Return if the task wasn't deleted...
-                if ( !isDeleted )
-                {
-                    return;
-                }
-
-                // Navigate to the next task if available
-                if ( nextTaskId )
-                {
-                    this._router.navigate(['../', nextTaskId], {relativeTo: this._activatedRoute});
-                }
-                // Otherwise, navigate to the parent
-                else
-                {
-                    this._router.navigate(['../'], {relativeTo: this._activatedRoute});
-                }
-            });
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-    }
 
     /**
      * Track by function for ngFor loops

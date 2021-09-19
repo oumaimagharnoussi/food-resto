@@ -7,8 +7,7 @@ import { fromEvent, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
-import { Tag, Task } from 'app/modules/admin/apps/tasks/tasks.types';
-import { TasksService } from 'app/modules/admin/apps/tasks/tasks.service';
+
 import { FormControl, FormGroup } from '@angular/forms';
 import { OrderService } from '../services/order.service';
 
@@ -601,23 +600,6 @@ export class TasksListComponent implements OnInit, OnDestroy
      */
 
 
-    /**
-     * Toggle the completed status
-     * of the given task
-     *
-     * @param task
-     */
-    toggleCompleted(task: Task): void
-    {
-        // Toggle the completed status
-        task.completed = !task.completed;
-
-        // Update the task on the server
-      
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-    }
 
     /**
      * Task dropped
