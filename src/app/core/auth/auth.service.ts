@@ -176,7 +176,8 @@ export class AuthService
 
         // Set the authenticated flag to false
         this._authenticated = false;
-
+        // Reload the app
+        location.reload();
         // Return the observable
         return of(true);
     }
