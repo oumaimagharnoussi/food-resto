@@ -16,12 +16,13 @@
                 <!-- Mark as complete -->
                 <ng-container >
                     <div class="flex  items-center justify-center">
-                      
+                        <img *ngIf="order.delivery && order.status!='DELIVERED'" class="h-8 w-8" src="https://www.clipartmax.com/png/full/67-676762_pizza-u0130skender-kebap-kebab-take-out-delivery-logo-giao-h%C3%A0ng.png">
                         <span *ngIf="order.status=='ORDERED'" class="ml-2 font-semibold">PENDING</span>
                         <span *ngIf="order.status=='ACCEPTED'" class="ml-2 font-semibold text-blue-500">ACCEPTED</span>
                         <span *ngIf="order.status=='PREPARED'" class="ml-2 font-semibold text-gray-900">PREPARED</span>
                         <span *ngIf="order.status=='DELIVERED'" class="ml-2 font-semibold text-green-500">DELIVERED</span>
                         <span *ngIf="order.status=='REJECTED'" class="ml-2 font-semibold text-red-500">REJECTED</span>
+                        <span *ngIf="order.status=='PICKED'" class="ml-2 font-semibold text-purple-500">PICKED</span>
                     </div> 
                    
                 </ng-container>
@@ -42,21 +43,21 @@
                     <button *ngIf="order.status=='ORDERED'"
                         mat-menu-item
                         (click)="acceptOrder()">
-                        <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                
                         <span>Accept order</span>
                     </button>
 
                     <button *ngIf="order.status=='ORDERED'"
                         mat-menu-item
                         (click)="rejectOrder()">
-                        <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                      
                         <span>Reject order</span>
                     </button>
 
                     <button *ngIf="order.status=='ACCEPTED'"
                     mat-menu-item
                     (click)="prepareOrder()">
-                    <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                   
                     <span>Set to prepared</span>
                 </button>
                 </mat-menu>

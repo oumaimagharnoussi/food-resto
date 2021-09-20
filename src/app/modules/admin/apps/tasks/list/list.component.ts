@@ -47,7 +47,8 @@ export class TasksListComponent implements OnInit, OnDestroy
         prepared:boolean,
         rejected:boolean,
         delivered:boolean,
-        accepted:boolean
+        accepted:boolean,
+        picked:boolean
     }
 
     type: {
@@ -159,7 +160,7 @@ export class TasksListComponent implements OnInit, OnDestroy
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
     showAll(){
-        this.show={all:true,pending:false,accepted:false,rejected:false,prepared:false,delivered:false}
+        this.show={all:true,pending:false,accepted:false,rejected:false,prepared:false,delivered:false,picked:false}
         if(this.type.all){
             this._orderService.getOrders().subscribe(
                 res=>  {
@@ -195,7 +196,7 @@ export class TasksListComponent implements OnInit, OnDestroy
 
     }
     showPending(){
-        this.show={all:false,pending:true,accepted:false,rejected:false,prepared:false,delivered:false}
+        this.show={all:false,pending:true,accepted:false,rejected:false,prepared:false,delivered:false,picked:false}
         if(this.type.all){
             this._orderService.getOrders('ORDERED').subscribe(
                 res=>  {
@@ -231,7 +232,7 @@ export class TasksListComponent implements OnInit, OnDestroy
 
     }
     showRejected(){
-        this.show={all:false,pending:false,accepted:false,rejected:true,prepared:false,delivered:false}
+        this.show={all:false,pending:false,accepted:false,rejected:true,prepared:false,delivered:false,picked:false}
         if(this.type.all){
             this._orderService.getOrders('REJECTED').subscribe(
                 res=>  {
@@ -266,7 +267,7 @@ export class TasksListComponent implements OnInit, OnDestroy
         }
     }
     showAccepted(){
-        this.show={all:false,pending:false,accepted:true,rejected:false,prepared:false,delivered:false}
+        this.show={all:false,pending:false,accepted:true,rejected:false,prepared:false,delivered:false,picked:false}
         if(this.type.all){
             this._orderService.getOrders('ACCEPTED').subscribe(
                 res=>  {
@@ -301,7 +302,7 @@ export class TasksListComponent implements OnInit, OnDestroy
         }
     }
     showDelivered(){
-        this.show={all:false,pending:false,accepted:false,rejected:false,prepared:false,delivered:true}
+        this.show={all:false,pending:false,accepted:false,rejected:false,prepared:false,delivered:true,picked:false}
 
         if(this.type.all){
             this._orderService.getOrders('DELIVERED').subscribe(
@@ -337,7 +338,7 @@ export class TasksListComponent implements OnInit, OnDestroy
         }
     }
     showPrepared(){
-        this.show={all:false,pending:false,accepted:false,rejected:false,prepared:true,delivered:false}
+        this.show={all:false,pending:false,accepted:false,rejected:false,prepared:true,delivered:false,picked:false}
         if(this.type.all){
             this._orderService.getOrders('PREPARED').subscribe(
                 res=>  {
@@ -362,6 +363,42 @@ export class TasksListComponent implements OnInit, OnDestroy
 
         if(this.type.delivery){
             this._orderService.getOrders('PREPARED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+    }
+    
+    showPicked(){
+        this.show={all:false,pending:false,accepted:false,rejected:false,prepared:false,delivered:false,picked:true}
+        if(this.type.all){
+            this._orderService.getOrders('PICKED').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.takeaway){
+            this._orderService.getOrders('PICKED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.type.delivery){
+            this._orderService.getOrders('PICKED','DELIVERY').subscribe(
                 res=>  {
                     this.orders=res
                      // Mark for check
@@ -439,6 +476,17 @@ export class TasksListComponent implements OnInit, OnDestroy
             )
         }
 
+        if(this.show.picked){
+            this._orderService.getOrders('PICKED','TAKEAWAY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
 
     }
 
@@ -500,6 +548,17 @@ export class TasksListComponent implements OnInit, OnDestroy
         }
         if(this.show.delivered){
             this._orderService.getOrders('DELIVERED','DELIVERY').subscribe(
+                res=>  {
+                    this.orders=res
+                     // Mark for check
+                     this._changeDetectorRef.markForCheck();
+                }
+               
+            )
+        }
+
+        if(this.show.picked){
+            this._orderService.getOrders('PICKED','DELIVERY').subscribe(
                 res=>  {
                     this.orders=res
                      // Mark for check

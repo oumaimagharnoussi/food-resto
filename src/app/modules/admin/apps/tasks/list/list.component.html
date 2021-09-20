@@ -58,6 +58,8 @@
                           <li  (click)="showRejected()" *ngIf="show.rejected" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-400'>REJECTED</li>
                           <li (click)="showPrepared()"  *ngIf="!show.prepared" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-200'>PREPARED</li>
                           <li  (click)="showPrepared()" *ngIf="show.prepared" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-400'>PREPARED</li>
+                          <li (click)="showPicked()"  *ngIf="!show.picked" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-200'>PICKED</li>
+                          <li  (click)="showPicked()" *ngIf="show.picked" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-400'>PICKED</li>
                           <li  (click)="showDelivered()" *ngIf="!show.delivered" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-200'>DELIVERED</li>
                           <li  (click)="showDelivered()" *ngIf="show.delivered" class='py-2 px-6 bg-white rounded-t-lg  bg-gray-400'>DELIVERED</li>
                         </ul>
@@ -74,12 +76,17 @@
                                 <div class="grid text-lg font-semibold">
                                     <!-- Header -->
                                     <div
-                                        class="grid-cols-2 md:grid-cols-5   z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                                        class="grid-cols-2 md:grid-cols-6   z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                                         matSort
                                         matSortDisableClear>
                                         <div>
                                             Order ID
                                         </div>
+                                        <div
+                                        class="hidden md:block"
+                                       >
+                                        Type
+                                    </div>
                                         <div
                                             class="hidden md:block"
                                            >
@@ -103,7 +110,7 @@
 
                                     <ng-container >
                                         <ng-container  >
-                                            <div *ngFor="let order of orders" [routerLink]="order.id"  class="grid-cols-2 md:grid-cols-5 grid items-center gap-4 py-3 px-6 hover:bg-gray-100 md:px-8 border-b">
+                                            <div *ngFor="let order of orders" [routerLink]="order.id"  class="grid-cols-2 md:grid-cols-6 grid items-center gap-4 py-3 px-6 hover:bg-gray-100 md:px-8 border-b">
             
                                                 <!-- Image -->
                                                 <div class="flex items-center">
@@ -112,14 +119,17 @@
                                                    
                                                 </div>
             
-                                       
+                                          <!-- Name -->
+                                          <div class="hidden md:block">
+                                            {{order.orderType}}
+                                        </div>
                                                      <!-- Name -->
                                                      <div class="hidden md:block">
                                                         {{ order.date | date:'short' }}
                                                     </div>
                                                 <!-- Name -->
                                                 <div class="hidden md:block">
-                                                   Alaa Assali
+                                                   {{order.client.firstName}} {{order.client.lastName}}
                                                 </div>
             
                                                 <!-- Price -->
@@ -128,13 +138,18 @@
                                                 </div>
             
                                                 <!-- Status -->
-                                                <div >
-                                                    <img *ngIf="order.delivery && order.status!='DELIVERED'" class="h-8 w-8" src="https://www.clipartmax.com/png/full/67-676762_pizza-u0130skender-kebap-kebab-take-out-delivery-logo-giao-h%C3%A0ng.png">
+                                                <div class="grid grid-cols-2 gap-0">
+                                                    <div>
+                                                        <img *ngIf="order.delivery && order.status!='DELIVERED'" class="h-8 w-8" src="https://www.clipartmax.com/png/full/67-676762_pizza-u0130skender-kebap-kebab-take-out-delivery-logo-giao-h%C3%A0ng.png">
+                                                    </div>
+
+                                                   
                                                     <div *ngIf="order.status=='ORDERED'" class=" text-center border-gray-500 text-yellow-500 border-opacity-75"> PENDING</div>
                                                     <div *ngIf="order.status=='ACCEPTED'" class=" text-center border-blue-500 text-blue-500 border-opacity-75"> ACCEPTED</div>
                                                     <div *ngIf="order.status=='REJECTED'" class=" text-center border-red-500 text-red-500 border-opacity-75"> REJECTED</div>
                                                     <div *ngIf="order.status=='PREPARED'" class=" text-center border-yellow-500 text-gray-900 border-opacity-75"> PREPARED</div>
                                                     <div *ngIf="order.status=='DELIVERED'" class=" text-center border-green-500 text-green-500 border-opacity-75"> DELIVERED</div>
+                                                    <div *ngIf="order.status=='PICKED'" class=" text-center border-green-500 text-purple-500 border-opacity-75"> PICKED</div>
                                                 
                                                 </div>
             
