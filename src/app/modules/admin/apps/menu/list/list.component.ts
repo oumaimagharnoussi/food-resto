@@ -9,7 +9,7 @@ import { NotesLabelsComponent } from 'app/modules/admin/apps/menu/labels/labels.
 import { cloneDeep } from 'lodash-es';
 import { MenuService } from '../services/menu.service';
 import { ProductService } from '../../ecommerce/services/product.service';
-
+import { environment } from 'environments/environment';
 
 @Component({
     selector       : 'menu-list',
@@ -19,6 +19,7 @@ import { ProductService } from '../../ecommerce/services/product.service';
 })
 export class MenuListComponent implements OnInit, OnDestroy
 {
+    server=environment.BACKEND;
     menus:any;
     showAll:boolean=false;
 

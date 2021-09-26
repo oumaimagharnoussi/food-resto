@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    BACKEND: 'https://food.dev.confledis.fr',
-    API: 'https://food.dev.confledis.fr/api/'
+    BACKEND: 'http://192.168.1.7:8000',
+    API: 'http://192.168.1.7:8000/api/'
 
 };
 

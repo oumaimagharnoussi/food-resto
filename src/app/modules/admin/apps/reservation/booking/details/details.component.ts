@@ -8,14 +8,15 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { ReservationService } from '../../services/reservation.service';
 
 import { BookingListComponent } from '../list/booking.component';
-
+import { environment } from 'environments/environment';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-  SERVER_URL = "https://food.dev.confledis.fr/api/media_objects";
+  server=environment.BACKEND
+  SERVER_URL = environment.API+"media_objects";
   uploadForm: FormGroup;  
   filepath="";
   reservation:any;

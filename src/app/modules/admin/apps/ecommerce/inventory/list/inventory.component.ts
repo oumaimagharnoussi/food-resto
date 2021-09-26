@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { DOCUMENT } from '@angular/common';
 import { ProductService } from '../../services/product.service';
-
+import { environment } from 'environments/environment';
 
 
 
@@ -49,6 +49,7 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
 
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
 
+    server=environment.BACKEND;
     add:boolean=false
     drawerMode: 'side' | 'over';
     products:any=null

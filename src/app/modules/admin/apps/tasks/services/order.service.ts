@@ -23,20 +23,20 @@ export class OrderService {
 
   getOrders(status=null,type=null): Observable<any> {
     if(status!=null && type==null){
-      return this._http.get(environment.API+'orders'+'?restaurant.restaurantOwner.id='+this.userId+'&status='+status).pipe(
+      return this._http.get(environment.API+'orders'+'?restaurant.restaurantOwner.id='+this.userId+'&status='+status+"&paymentDetails.status=PAID").pipe(
         map(this.extractData));
     }
     if(status==null && type==null){
-      return this._http.get(environment.API+'orders'+'?restaurant.restaurantOwner.id='+this.userId).pipe(
+      return this._http.get(environment.API+'orders'+'?restaurant.restaurantOwner.id='+this.userId+"&paymentDetails.status=PAID").pipe(
         map(this.extractData));
     }
     if(status!=null && type!=null){
-      return this._http.get(environment.API+'orders'+'?restaurant.restaurantOwner.id='+this.userId+'&status='+status+'&orderType='+type).pipe(
+      return this._http.get(environment.API+'orders'+'?restaurant.restaurantOwner.id='+this.userId+'&status='+status+'&orderType='+type+"&paymentDetails.status=PAID").pipe(
         map(this.extractData));
     }
 
     if(status==null && type!=null){
-      return this._http.get(environment.API+'orders'+'?restaurant.restaurantOwner.id='+this.userId+'&orderType='+type).pipe(
+      return this._http.get(environment.API+'orders'+'?restaurant.restaurantOwner.id='+this.userId+'&orderType='+type+"&paymentDetails.status=PAID").pipe(
         map(this.extractData));
     }
 

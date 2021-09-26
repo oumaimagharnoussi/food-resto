@@ -9,6 +9,7 @@ import RestaurantOwner from 'app/shared/Models/RestaurantOwner';
 import { DeviseService } from 'app/shared/services/devise.service';
 import { SpecialityService } from 'app/shared/services/speciality.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import Address from 'app/shared/Models/Address';
 
 @Component({
     selector     : 'auth-sign-up',
@@ -126,17 +127,18 @@ export class AuthSignUpComponent implements OnInit
         this.showAlert = false;
 
         const restaurantInfo= new Restaurant();
-        restaurantInfo.administrativeAreaLevel1=this.signUpForm.value.state;
-        restaurantInfo.country="RDC";
+        restaurantInfo.businessAddress=new Address();
+        restaurantInfo.businessAddress.administrativeAreaLevel1=this.signUpForm.value.state;
+        restaurantInfo.businessAddress.country="RDC";
         restaurantInfo.description=this.signUpForm.value.description;
-        restaurantInfo.locality=this.signUpForm.value.city;
+        restaurantInfo.businessAddress.locality=this.signUpForm.value.city;
         restaurantInfo.name=this.signUpForm.value.restauName;
-        restaurantInfo.postalCode=this.signUpForm.value.postCode;
-        restaurantInfo.route=this.signUpForm.value.street;
+        restaurantInfo.businessAddress.postalCode=this.signUpForm.value.postCode;
+        restaurantInfo.businessAddress.route=this.signUpForm.value.street;
         restaurantInfo.currency='api/currencies/'+this.devise
         restaurantInfo.speciality='api/specialities/'+this.speciality
        // restaurantInfo.logo=this.restaurant.logo;
-        restaurantInfo.streetNumber=Number(this.signUpForm.value.number);
+        restaurantInfo.businessAddress.streetNumber=Number(this.signUpForm.value.number);
         restaurantInfo.restaurantTel=this.signUpForm.value.restaurantTel;
 
         // Sign up

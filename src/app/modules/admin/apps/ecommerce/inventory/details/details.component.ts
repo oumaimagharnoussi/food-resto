@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { ProductService } from '../../services/product.service';
 import { InventoryListComponent } from '../list/inventory.component';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-details',
@@ -14,7 +15,8 @@ import { InventoryListComponent } from '../list/inventory.component';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-  SERVER_URL = "https://food.dev.confledis.fr/api/media_objects";
+  server=environment.BACKEND;
+  SERVER_URL = environment.API+"media_objects";
   uploadForm: FormGroup;  
   filepath=""
   

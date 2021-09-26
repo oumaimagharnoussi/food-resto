@@ -105,7 +105,7 @@
                         <div class="px-4 py-2">
                           <h1 class="text-gray-900 font-bold text-xl uppercase">{{p.name}}</h1>
                         </div>
-                        <img class="h-56 w-full object-cover mt-2" [src]="'https://food.dev.confledis.fr/media/'+p.image?.filePath" alt="NIKE AIR">
+                        <img class="h-56 w-full object-cover mt-2" [src]="server+'/media/'+p.image?.filePath" alt="NIKE AIR">
                         <div *ngIf="contain(p)==false && selectedMenu"  class="flex items-center justify-between px-4 py-2 bg-blue-700">
                           <h1 class="text-gray-200 font-bold text-xl">${{p.unitPrice}}</h1>
                           <button (click)="addProductToMenu(p)" class="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded">ADD</button>
@@ -132,7 +132,7 @@
                             <div class="px-4 py-2">
                               <h1 class="text-gray-900 font-bold text-xl uppercase">{{p.name}}</h1>
                             </div>
-                            <img class="h-56 w-full object-cover mt-2" [src]="'https://food.dev.confledis.fr/media/'+p.image?.filePath" alt="NIKE AIR">
+                            <img class="h-56 w-full object-cover mt-2" [src]="server+'/media/'+p.image?.filePath" alt="NIKE AIR">
                           
     
                             <div *ngIf="contain(p)==true" class="flex items-center justify-between px-4 py-2 bg-gray-700">

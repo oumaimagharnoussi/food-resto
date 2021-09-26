@@ -3,13 +3,15 @@ import { ProductService } from '../../services/product.service';
 import { InventoryListComponent } from '../list/inventory.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-  SERVER_URL = "https://food.dev.confledis.fr/api/media_objects";
+  server=environment.BACKEND
+  SERVER_URL = environment.API+"media_objects";
   uploadForm: FormGroup;  
   filepath=""
   p={

@@ -34,7 +34,7 @@
         
             <div class="flex items-center">
                 <!-- More menu -->
-                <button *ngIf="order.status!='REJECTED' && order.status!='DELIVERED'"
+                <button *ngIf="(order.status!='REJECTED' && order.status!='DELIVERED')||(order.orderType=='TAKEAWAY'&& order.status=='PREPARED')"
                     mat-icon-button
                     [matMenuTriggerFor]="moreMenu">
                    <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
@@ -44,21 +44,21 @@
                         mat-menu-item
                         (click)="acceptOrder()">
                 
-                        <span>Accept order</span>
+                        <span class="text-green-500">Accept order</span>
                     </button>
 
                     <button *ngIf="order.status=='ORDERED'"
                         mat-menu-item
                         (click)="rejectOrder()">
                       
-                        <span>Reject order</span>
+                        <span class="text-red-500">Reject order</span>
                     </button>
 
                     <button *ngIf="order.status=='ACCEPTED'"
                     mat-menu-item
                     (click)="prepareOrder()">
                    
-                    <span>Set to prepared</span>
+                    <span class="text-blue-500">Set to prepared</span>
                 </button>
                 </mat-menu>
 
@@ -98,7 +98,7 @@
             </div>
             <mat-divider class="mt-1 mb-1"></mat-divider>
             <div>
-                <label class="text-lg text-gray-400 font-semibold mr-2">Total ( {{order.totalPrice}} $ )</label>
+                <label class="text-lg text-gray-400 font-semibold mr-2">Total ( {{order.orderPrice}} $ )</label>
             </div>
             <div>
                 <mat-accordion>

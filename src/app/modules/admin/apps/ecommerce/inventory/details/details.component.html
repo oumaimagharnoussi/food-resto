@@ -117,7 +117,7 @@
                                         </div>
                                         <div>
                                             <img *ngIf="filepath.length==0" class="h-32 w-32" src="https://luigispizzakenosha.com/wp-content/uploads/placeholder.png">
-                                            <img *ngIf="filepath.length>0"  class="h-32 w-32"   [src]="'https://food.dev.confledis.fr/media/'+filepath">
+                                            <img *ngIf="filepath.length>0"  class="h-32 w-32"   [src]="server+'/media/'+filepath">
                                        
                                         </div>
                                         <div class="float-right">
