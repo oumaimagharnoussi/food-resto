@@ -1,164 +1,134 @@
 <div class="flex flex-auto">
 
-    <form
-        class="flex flex-col flex-auto p-6 pt-10 sm:p-8 sm:pt-10 overflow-y-auto"
-        >
+    <form class="flex flex-col flex-auto p-6 pt-10 sm:p-8 sm:pt-10 overflow-y-auto">
 
         <!-- Header -->
         <div class="flex items-center justify-between -mt-3 -ml-4">
 
-         
+
 
             <div class="flex items-center">
                 <!-- More menu -->
 
                 <!-- Close button -->
-                <button
-                    mat-icon-button
-                    (click)="closeDrawer()"
-                    [routerLink]="['../']">
+                <button mat-icon-button (click)="closeDrawer()" [routerLink]="['../']">
                     <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
                 </button>
             </div>
 
         </div>
 
-   
+
         <div class="">
             <div class="flex border-b">
                 <!-- Selected product form -->
-                <form
-                    class="flex flex-col w-full"
-                  >
+                <form class="flex flex-col w-full">
 
-                  <div class="p-2">
+                    <div class="p-2">
 
-                
-        
-                    <div class="flex flex-auto flex-wrap">
-                        <!-- Name, SKU & etc. -->
-                        <div class="flex flex-col w-full  sm:pl-4">
-        
-                            <!-- Name -->
-                            <mat-form-field class="w-full">
-                                <mat-label>Name</mat-label>
-                                <input [(ngModel)]="product.name" name="name"
-                                    matInput
-                             >
-                            </mat-form-field>
-        
-                            <!-- SKU and Barcode -->
-                            <div class="flex">
-                                <mat-form-field class="w-full pr-2">
-                                    <mat-label>Description</mat-label>
-                                    <input [(ngModel)]="product.description" name="description"
-                                        matInput
-                               >
+
+
+                        <div class="flex flex-auto flex-wrap">
+                            <!-- Name, SKU & etc. -->
+                            <div class="flex flex-col w-full  sm:pl-4">
+
+                                <!-- Name -->
+                                <mat-form-field class="w-full">
+                                    <mat-label>Name</mat-label>
+                                    <input [(ngModel)]="product.name" name="name" matInput>
                                 </mat-form-field>
-                               
+
+                                <!-- SKU and Barcode -->
+                                <div class="flex">
+                                    <mat-form-field class="w-full pr-2">
+                                        <mat-label>Description</mat-label>
+                                        <input [(ngModel)]="product.description" name="description" matInput>
+                                    </mat-form-field>
+
+                                </div>
+
+                                <!-- Category, Brand & Vendor -->
+
+
+                                <!-- Stock and Reserved -->
+                                <div class="flex">
+                                    <mat-form-field class="w-1/2 pr-2">
+                                        <mat-label>Stock</mat-label>
+                                        <input [(ngModel)]="product.stock" name="stock" type="number" matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 pl-2">
+                                        <mat-label>Reserved</mat-label>
+                                        <input [(ngModel)]="product.seuil" name="seuil" type="number" matInput>
+                                    </mat-form-field>
+                                </div>
+
+                                <!-- Stock and Reserved -->
+                                <div class="flex">
+                                    <mat-form-field class="w-1/2 pr-2">
+                                        <mat-label>Price</mat-label>
+                                        <input [(ngModel)]="product.unitPrice" name="unitPrice" type="number" matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 pl-2">
+                                        <mat-label>Category</mat-label>
+                                        <mat-select>
+                                            <mat-option value="option1">Plats</mat-option>
+                                            <mat-option value="option2">Coke</mat-option>
+                                            <mat-option value="option3">Fast-food</mat-option>
+                                        </mat-select>
+
+                                    </mat-form-field>
+                                </div>
+
+
                             </div>
-        
-                            <!-- Category, Brand & Vendor -->
-                         
-        
-                            <!-- Stock and Reserved -->
-                            <div class="flex">
-                                <mat-form-field class="w-1/2 pr-2">
-                                    <mat-label>Stock</mat-label>
-                                    <input [(ngModel)]="product.stock" name="stock"
-                                        type="number"
-                                        matInput
-                                     >
-                                </mat-form-field>
-                                <mat-form-field class="w-1/2 pl-2">
-                                    <mat-label>Reserved</mat-label>
-                                    <input [(ngModel)]="product.seuil" name="seuil"
-                                        type="number"
-                                        matInput
-                                       >
-                                </mat-form-field>
-                            </div>
-        
-                         <!-- Stock and Reserved -->
-                            <div class="flex">
-                                <mat-form-field class="w-1/2 pr-2">
-                                    <mat-label>Price</mat-label>
-                                    <input  [(ngModel)]="product.unitPrice" name="unitPrice"
-                                        type="number"
-                                        matInput
-                                     >
-                                </mat-form-field>
-                                <mat-form-field class="w-1/2 pl-2">
-                                    <mat-label>Category</mat-label>
-                                    <mat-select >
-                                        <mat-option value="option1">Plats</mat-option>
-                                        <mat-option value="option2" >Coke</mat-option>
-                                        <mat-option value="option3">Fast-food</mat-option>
-                                      </mat-select>
-                                    
-                                </mat-form-field>
-                            </div>
-        
-        
+
+
+
+
                         </div>
-        
-        
-                   
-        
-                    </div>
 
                         <!-- Product images and status -->
                         <div class="sm:items-center mb-8 sm:mb-0">
                             <div class="">
                                 <div class="">
-                                    <form [formGroup] = "uploadForm" (ngSubmit)="onSubmit()">      
+                                    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
                                         <div>
-                                          <input type="file" name="profile" (change)="onFileSelect($event)" />
+                                            <input type="file" name="profile" (change)="onFileSelect($event)" />
                                         </div>
                                         <div>
                                             <img *ngIf="filepath.length==0" class="h-32 w-32" src="https://luigispizzakenosha.com/wp-content/uploads/placeholder.png">
-                                            <img *ngIf="filepath.length>0"  class="h-32 w-32"   [src]="server+'/media/'+filepath">
-                                       
+                                            <img *ngIf="filepath.length>0" class="h-32 w-32" [src]="server+filepath">
+
                                         </div>
                                         <div class="float-right">
-                                          <button type="submit">Upload</button>
+                                            <button type="submit">Upload</button>
                                         </div>
-                                      </form>
+                                    </form>
                                 </div>
-                          
+
                             </div>
-                           
+
                         </div>
-        
-                </div>
+
+                    </div>
 
                     <div class="flex items-center justify-between w-full border-t py-4">
-                        <button
-                            class="-ml-4"
-                            mat-button
-                            [color]="'warn'"
-                            (click)="deleteProduct()"
-                            >
+                        <button class="-ml-4" mat-button [color]="'warn'" (click)="deleteProduct()">
                             Delete
                         </button>
 
-                        <button
-                        class="-ml-4"
-                        mat-button
-                        (click)="updateProduct()"
-                        [color]="'primary'"
-                        >
+                        <button class="-ml-4" mat-button (click)="updateProduct()" [color]="'primary'">
                         Update
                     </button>
-                      
+
                     </div>
 
-              
+
 
                 </form>
             </div>
         </div>
-     
+
 
     </form>
 

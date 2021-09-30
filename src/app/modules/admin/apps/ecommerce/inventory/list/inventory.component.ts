@@ -49,7 +49,7 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
 
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
 
-    server=environment.BACKEND;
+    server=environment.S3_url;
     add:boolean=false
     drawerMode: 'side' | 'over';
     products:any=null

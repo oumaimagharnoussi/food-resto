@@ -19,7 +19,7 @@ import { environment } from 'environments/environment';
 })
 export class MenuListComponent implements OnInit, OnDestroy
 {
-    server=environment.BACKEND;
+    server=environment.S3_url;
     menus:any;
     showAll:boolean=false;
 

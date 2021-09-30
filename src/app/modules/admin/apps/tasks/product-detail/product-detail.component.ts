@@ -7,7 +7,7 @@ import { environment } from 'environments/environment';
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
-  server=environment.BACKEND;
+  server=environment.S3_url;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 

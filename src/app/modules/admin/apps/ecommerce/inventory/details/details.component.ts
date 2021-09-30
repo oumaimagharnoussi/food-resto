@@ -15,7 +15,7 @@ import { environment } from 'environments/environment';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-  server=environment.BACKEND;
+  server=environment.S3_url;
   SERVER_URL = environment.API+"media_objects";
   uploadForm: FormGroup;  
   filepath=""

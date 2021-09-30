@@ -3,39 +3,23 @@
     <mat-drawer-container class="flex-auto h-full bg-card dark:bg-transparent">
 
         <!-- Drawer -->
-        <mat-drawer
-            class="w-2/3 sm:w-72 lg:w-56 border-r-0 bg-default"
-            [mode]="drawerMode"
-            [opened]="drawerOpened"
-            #drawer>
+        <mat-drawer class="w-2/3 sm:w-72 lg:w-56 border-r-0 bg-default" [mode]="drawerMode" [opened]="drawerOpened" #drawer>
             <div class="p-6 lg:py-8 lg:pl-4 lg:pr-0">
                 <!-- Filters -->
                 <div class="space-y-2">
                     <!-- Notes -->
-                <label class="font-bold">Menu list</label>
-                  
-                <div *ngFor="let m of menus"
-                class="relative flex items-center py-2 px-4 font-medium rounded-full cursor-pointer"
-                [ngClass]="{'bg-gray-200 dark:bg-gray-700 text-primary dark:text-primary-400': selectedMenu === m,
-                        'text-hint hover:bg-hover': filterStatus !== m}"
-                        (click)="showMenu(m)"
-                matRipple
-                [matRippleDisabled]="filterStatus === m">
-                <mat-icon
-                class="text-current"
-                [svgIcon]="'heroicons_outline:tag'"></mat-icon>
-                <div class="ml-3 leading-5 select-none text-default">{{m.label}}</div>
-            </div>
+                    <label class="font-bold">Menu list</label>
+
+                    <div *ngFor="let m of menus" class="relative flex items-center py-2 px-4 font-medium rounded-full cursor-pointer" [ngClass]="{'bg-gray-200 dark:bg-gray-700 text-primary dark:text-primary-400': selectedMenu === m,
+                        'text-hint hover:bg-hover': filterStatus !== m}" (click)="showMenu(m)" matRipple [matRippleDisabled]="filterStatus === m">
+                        <mat-icon class="text-current" [svgIcon]="'heroicons_outline:tag'"></mat-icon>
+                        <div class="ml-3 leading-5 select-none text-default">{{m.label}}</div>
+                    </div>
 
 
                     <!-- Edit Labels -->
-                    <div
-                        class="relative flex items-center py-2 px-4 font-medium rounded-full cursor-pointer hover:bg-hover"
-                        (click)="openEditLabelsDialog()"
-                        matRipple>
-                        <mat-icon
-                            class="text-hint"
-                            [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                    <div class="relative flex items-center py-2 px-4 font-medium rounded-full cursor-pointer hover:bg-hover" (click)="openEditLabelsDialog()" matRipple>
+                        <mat-icon class="text-hint" [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                         <div class="ml-3 leading-5 select-none">Edit menus</div>
                     </div>
                 </div>
@@ -50,41 +34,20 @@
                 <!-- Header -->
                 <div class="flex items-center">
                     <div class="flex items-center flex-auto">
-                        <button
-                            class="flex lg:hidden -ml-2"
-                            mat-icon-button
-                            (click)="drawer.toggle()">
+                        <button class="flex lg:hidden -ml-2" mat-icon-button (click)="drawer.toggle()">
                             <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
                         </button>
                         <mat-form-field class="fuse-mat-rounded fuse-mat-dense fuse-mat-no-subscript flex-auto ml-4 ">
-                            <mat-icon
-                                class="icon-size-5"
-                                [svgIcon]="'heroicons_solid:search'"
-                                matPrefix></mat-icon>
-                            <input
-                                matInput
-                                [autocomplete]="'off'"
-                                [placeholder]="'Search products'"
-                                (input)="filterByQuery(searchInput.value)"
-                                #searchInput>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:search'" matPrefix></mat-icon>
+                            <input matInput [autocomplete]="'off'" [placeholder]="'Search products'" (input)="filterByQuery(searchInput.value)" #searchInput>
                         </mat-form-field>
                     </div>
                     <!-- New note -->
-                    <button
-                        class="ml-4 px-1 sm:px-4 min-w-10"
-                        mat-flat-button
-                        *ngIf="selectedMenu && showAll==false"
-                        [color]="'primary'"
-                        (click)="getAllProducts()">
+                    <button class="ml-4 px-1 sm:px-4 min-w-10" mat-flat-button *ngIf="selectedMenu && showAll==false" [color]="'primary'" (click)="getAllProducts()">
                        
                         <span class="hidden sm:inline-block ml-2">Menu products</span>
                     </button>
-                    <button
-                    class="ml-4 px-1 sm:px-4 min-w-10"
-                    mat-flat-button
-                    *ngIf="selectedMenu && showAll==true"
-                    [color]="'accent'"
-                    (click)="getAllProducts()">
+                    <button class="ml-4 px-1 sm:px-4 min-w-10" mat-flat-button *ngIf="selectedMenu && showAll==true" [color]="'accent'" (click)="getAllProducts()">
                    
                     <span class="hidden sm:inline-block ml-2">All products</span>
                 </button>
@@ -98,18 +61,18 @@
                         No menu added ! <br>
                         <button  mat-flat-button [color]="'warn'" class="ml-4 px-1 sm:px-4 min-w-10" (click)="openEditLabelsDialog()"> Manage menu</button>
                     </label>
-                   
+
                 </div>
                 <div *ngIf="showAll" class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
-                    <div  *ngFor="let p of products " class="max-w-xs  bg-white shadow-lg rounded-lg overflow-hidden my-2">
+                    <div *ngFor="let p of products " class="max-w-xs  bg-white shadow-lg rounded-lg overflow-hidden my-2">
                         <div class="px-4 py-2">
-                          <h1 class="text-gray-900 font-bold text-xl uppercase">{{p.name}}</h1>
+                            <h1 class="text-gray-900 font-bold text-xl uppercase">{{p.name}}</h1>
                         </div>
-                        <img class="h-56 w-full object-cover mt-2" [src]="server+'/media/'+p.image?.filePath" alt="NIKE AIR">
-                        <div *ngIf="contain(p)==false && selectedMenu"  class="flex items-center justify-between px-4 py-2 bg-blue-700">
-                          <h1 class="text-gray-200 font-bold text-xl">${{p.unitPrice}}</h1>
-                          <button (click)="addProductToMenu(p)" class="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded">ADD</button>
-                         
+                        <img class="h-56 w-full object-cover mt-2" [src]="server+p.image?.filePath" alt="NIKE AIR">
+                        <div *ngIf="contain(p)==false && selectedMenu" class="flex items-center justify-between px-4 py-2 bg-blue-700">
+                            <h1 class="text-gray-200 font-bold text-xl">${{p.unitPrice}}</h1>
+                            <button (click)="addProductToMenu(p)" class="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded">ADD</button>
+
                         </div>
 
                         <div *ngIf="contain(p)==true && selectedMenu" class="flex items-center justify-between px-4 py-2 bg-gray-700">
@@ -118,41 +81,41 @@
                         </div>
                     </div>
 
-                 
-                
 
 
-                   
+
+
+
                 </div>
 
                 <div *ngIf="!showAll && selectedMenu && selectedMenu!=null" class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
-                    
-                  
-                        <div  *ngFor="let p of selectedMenu?.products " class="max-w-xs  bg-white shadow-lg rounded-lg overflow-hidden my-2">
-                            <div class="px-4 py-2">
-                              <h1 class="text-gray-900 font-bold text-xl uppercase">{{p.name}}</h1>
-                            </div>
-                            <img class="h-56 w-full object-cover mt-2" [src]="server+'/media/'+p.image?.filePath" alt="NIKE AIR">
-                          
-    
-                            <div *ngIf="contain(p)==true" class="flex items-center justify-between px-4 py-2 bg-gray-700">
-                                <h1 class="text-gray-200 font-bold text-xl">${{p.unitPrice}}</h1>
-                                <button (click)="removeProductFromMenu(p)" class="px-3 py-1 bg-gray-200 text-sm text-red-700 font-semibold rounded">Remove</button>
-                            </div>
+
+
+                    <div *ngFor="let p of selectedMenu?.products " class="max-w-xs  bg-white shadow-lg rounded-lg overflow-hidden my-2">
+                        <div class="px-4 py-2">
+                            <h1 class="text-gray-900 font-bold text-xl uppercase">{{p.name}}</h1>
                         </div>
-                    
-
-                 
-                
+                        <img class="h-56 w-full object-cover mt-2" [src]="server+p.image?.filePath" alt="NIKE AIR">
 
 
-                   
+                        <div *ngIf="contain(p)==true" class="flex items-center justify-between px-4 py-2 bg-gray-700">
+                            <h1 class="text-gray-200 font-bold text-xl">${{p.unitPrice}}</h1>
+                            <button (click)="removeProductFromMenu(p)" class="px-3 py-1 bg-gray-200 text-sm text-red-700 font-semibold rounded">Remove</button>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
                 </div>
 
 
 
 
-                  
+
 
 
             </div>
