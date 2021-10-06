@@ -10,6 +10,7 @@ import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/co
 
 import { FormControl, FormGroup } from '@angular/forms';
 import { OrderService } from '../services/order.service';
+import { SseService } from 'app/shared/services/sse.service';
 
 @Component({
     selector       : 'tasks-list',
@@ -78,6 +79,7 @@ export class TasksListComponent implements OnInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         @Inject(DOCUMENT) private _document: any,
         private _router: Router,
+        private sse:SseService,
        
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService,
@@ -125,6 +127,20 @@ export class TasksListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        this.sse.returnAsObservable().subscribe(data=>
+            {
+              this.getOrders()
+      
+              /*  this._snackBar.open("New update !", "ok", {
+                  duration: 500,
+                });
+                */
+              console.log(data);
+            }
+          );
+        
+          this.sse.GetExchangeData('orders'); 
+      
        // this.getOrders()
 
         // Get the tags
@@ -154,6 +170,7 @@ export class TasksListComponent implements OnInit, OnDestroy
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+        this.sse.stopExchangeUpdates();
     }
 
     // -----------------------------------------------------------------------------------------------------

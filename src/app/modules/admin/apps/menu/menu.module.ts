@@ -16,12 +16,14 @@ import { NotesLabelsComponent } from 'app/modules/admin/apps/menu/labels/labels.
 import { menusRoutes } from 'app/modules/admin/apps/menu/menu.routing';
 import { FuseCardModule } from '@fuse/components/card';
 import { MenusComponent } from './menus.component';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
 
 @NgModule({
     declarations: [
         MenusComponent,
         MenuListComponent,
-        NotesLabelsComponent
+        NotesLabelsComponent,
+        SearchFilterPipe
     ],
     imports     : [
         RouterModule.forChild(menusRoutes),

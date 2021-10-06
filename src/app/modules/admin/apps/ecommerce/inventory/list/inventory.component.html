@@ -26,7 +26,7 @@
                     <!-- Search -->
                     <mat-form-field *ngIf="add==false" class="fuse-mat-dense fuse-mat-no-subscript min-w-50">
                         <mat-icon matPrefix [svgIcon]="'heroicons_outline:search'"></mat-icon>
-                        <input matInput [formControl]="searchInputControl" [autocomplete]="'off'" [placeholder]="'Search products'">
+                        <input matInput [formControl]="searchInputControl" [autocomplete]="'off'" [(ngModel)]="searchText" [placeholder]="'Search products'">
                     </mat-form-field>
                     <!-- Add product button -->
                     <button *ngIf="add==false" class="ml-4" mat-flat-button [color]="'primary'" (click)="showAddForm()">
@@ -67,7 +67,7 @@
                                 </div>
                                 <!-- Rows -->
                                 <ng-container>
-                                    <ng-container *ngFor="let p of products">
+                                    <ng-container *ngFor="let p of products  | searchFilter: searchText">
                                         <div [routerLink]=[p.id] class="inventory-grid grid items-center gap-4 py-3 px-6 hover:bg-gray-100 md:px-8 border-b">
 
                                             <!-- Image -->

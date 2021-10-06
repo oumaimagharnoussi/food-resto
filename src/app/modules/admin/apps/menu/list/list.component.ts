@@ -22,7 +22,7 @@ export class MenuListComponent implements OnInit, OnDestroy
     server=environment.S3_url;
     menus:any;
     showAll:boolean=false;
-
+    searchText:string=""
 
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;

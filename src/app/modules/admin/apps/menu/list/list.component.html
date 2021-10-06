@@ -39,7 +39,7 @@
                         </button>
                         <mat-form-field class="fuse-mat-rounded fuse-mat-dense fuse-mat-no-subscript flex-auto ml-4 ">
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:search'" matPrefix></mat-icon>
-                            <input matInput [autocomplete]="'off'" [placeholder]="'Search products'" (input)="filterByQuery(searchInput.value)" #searchInput>
+                            <input matInput [autocomplete]="'off'" [placeholder]="'Search products'" [(ngModel)]="searchText" (input)="filterByQuery(searchInput.value)" #searchInput>
                         </mat-form-field>
                     </div>
                     <!-- New note -->
@@ -64,7 +64,7 @@
 
                 </div>
                 <div *ngIf="showAll" class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
-                    <div *ngFor="let p of products " class="max-w-xs  bg-white shadow-lg rounded-lg overflow-hidden my-2">
+                    <div *ngFor="let p of products | searchFilter: searchText" class="max-w-xs  bg-white shadow-lg rounded-lg overflow-hidden my-2">
                         <div class="px-4 py-2">
                             <h1 class="text-gray-900 font-bold text-xl uppercase">{{p.name}}</h1>
                         </div>
@@ -91,7 +91,7 @@
                 <div *ngIf="!showAll && selectedMenu && selectedMenu!=null" class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
 
 
-                    <div *ngFor="let p of selectedMenu?.products " class="max-w-xs  bg-white shadow-lg rounded-lg overflow-hidden my-2">
+                    <div *ngFor="let p of selectedMenu?.products | searchFilter: searchText " class="max-w-xs  bg-white shadow-lg rounded-lg overflow-hidden my-2">
                         <div class="px-4 py-2">
                             <h1 class="text-gray-900 font-bold text-xl uppercase">{{p.name}}</h1>
                         </div>

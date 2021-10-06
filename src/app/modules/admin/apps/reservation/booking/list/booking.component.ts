@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { DOCUMENT } from '@angular/common';
 import { ReservationService } from '../../services/reservation.service';
+import { SseService } from 'app/shared/services/sse.service';
 
 
 
@@ -71,7 +72,8 @@ export class BookingListComponent implements OnInit, AfterViewInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         @Inject(DOCUMENT) private _document: any,
-        private _router: Router, private _reservationService:ReservationService
+        private _router: Router, private _reservationService:ReservationService,
+        private sse:SseService
     )
     {
     }
@@ -102,7 +104,20 @@ export class BookingListComponent implements OnInit, AfterViewInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this.getReservations()
+        
+        this.sse.returnAsObservable().subscribe(data=>
+            {
+                this.getReservations()
+      
+              /*  this._snackBar.open("New update !", "ok", {
+                  duration: 500,
+                });
+                */
+              console.log(data);
+            }
+          );
+        
+          this.sse.GetExchangeData('reservations'); 
         // Subscribe to media query change
         this._fuseMediaWatcherService.onMediaQueryChange$('(min-width: 1440px)')
             .pipe(takeUntil(this._unsubscribeAll))
@@ -134,6 +149,7 @@ export class BookingListComponent implements OnInit, AfterViewInit, OnDestroy
          // Unsubscribe from all subscriptions
          this._unsubscribeAll.next();
          this._unsubscribeAll.complete();
+         this.sse.stopExchangeUpdates();
      }
 
     // -----------------------------------------------------------------------------------------------------

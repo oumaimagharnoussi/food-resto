@@ -21,12 +21,14 @@ import { DetailsComponent } from './inventory/details/details.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AddComponent } from './inventory/add/add.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
 @NgModule({
     declarations: [
         InventoryComponent,
         InventoryListComponent,
         DetailsComponent,
-        AddComponent
+        AddComponent,
+        SearchFilterPipe
     ],
     imports     : [
         RouterModule.forChild(ecommerceRoutes),

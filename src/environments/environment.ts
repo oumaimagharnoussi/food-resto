@@ -6,7 +6,8 @@ export const environment = {
     production: false,
     BACKEND: 'http://192.168.1.7:8000',
     API: 'http://192.168.1.7:8000/api/',
-    S3_url:'https://dev-rd-food.s3.eu-north-1.amazonaws.com/document/'
+    S3_url:'https://dev-rd-food.s3.eu-north-1.amazonaws.com/document/',
+    SSE_url: 'http://192.168.1.7:3000'
 
 };
 
