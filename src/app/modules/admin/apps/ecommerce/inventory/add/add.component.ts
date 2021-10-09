@@ -10,7 +10,7 @@ import { environment } from 'environments/environment';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-  server=environment.BACKEND
+  server=environment.S3_url;
   SERVER_URL = environment.API+"media_objects";
   uploadForm: FormGroup;  
   filepath=""

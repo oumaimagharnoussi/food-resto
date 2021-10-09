@@ -13,6 +13,9 @@ import { AuthSignUpComponent } from 'app/modules/auth/sign-up/sign-up.component'
 import { authSignupRoutes } from 'app/modules/auth/sign-up/sign-up.routing';
 import { MatSelectModule } from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import {MatCardModule} from '@angular/material/card';
+
 @NgModule({
     declarations: [
         AuthSignUpComponent
@@ -29,7 +32,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
         FuseAlertModule,
         SharedModule,
         MatSelectModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatCardModule,
+        MatGoogleMapsAutocompleteModule
     ]
 })
 export class AuthSignUpModule
