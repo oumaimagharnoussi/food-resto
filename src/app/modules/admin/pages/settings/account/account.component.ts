@@ -71,7 +71,8 @@ export class SettingsAccountComponent implements OnInit
                 this._changeDetectorRef.markForCheck();
                 this.accountForm.patchValue(res[0])
                 this.accountForm.patchValue({
-                    speciality:res[0].speciality.label
+                    speciality:res[0].speciality.label,
+                    country:res[0].businessAddress.country
                 })
             }
         )

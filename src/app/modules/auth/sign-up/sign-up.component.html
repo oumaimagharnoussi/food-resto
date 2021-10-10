@@ -115,9 +115,9 @@
                 <!-- Name field -->
                 <mat-form-field class="w-full">
                     <mat-label>short description</mat-label>
-                    <input id="name" matInput [formControlName]="'name'">
-                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
-                        Full name is required
+                    <input id="name" matInput [formControlName]="'description'">
+                    <mat-error *ngIf="signUpForm.get('description').hasError('required')">
+                        description is required
                     </mat-error>
                 </mat-form-field>
 

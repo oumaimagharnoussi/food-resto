@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from 'environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,8 @@ export class ProjectService
         return this._data.asObservable();
     }
 
+
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -43,5 +46,10 @@ export class ProjectService
                 this._data.next(response);
             })
         );
+    }
+
+    getStatisitics():Observable<any>
+    {
+        return this._httpClient.get(environment.BACKEND+'/restaurant/dashboard?id='+localStorage.getItem('accessUser'))
     }
 }
