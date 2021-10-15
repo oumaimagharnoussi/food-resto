@@ -23,6 +23,8 @@ import { ProductDetailComponent } from '../product-detail/product-detail.compone
 })
 export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 {
+  
+
     @ViewChild('tagsPanelOrigin') private _tagsPanelOrigin: ElementRef;
     @ViewChild('tagsPanel') private _tagsPanel: TemplateRef<any>;
     @ViewChild('titleField') private _titleField: ElementRef;
@@ -70,6 +72,22 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
         return ch.substring(index+1,ch.length)
       }
 
+     /*  getReverseGeocodingData(lat, lng) {
+        var latlng = new google.maps.LatLng(lat, lng);
+        // This is making the Geocode request
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'location': {lat:lat,lng:lng}},  (results, status) =>{
+            if (status !== google.maps.GeocoderStatus.OK) {
+                alert(status);
+            }
+            // This is checking to see if the Geoeode Status is OK before proceeding
+            if (status == google.maps.GeocoderStatus.OK) {
+                console.log(results);
+                var address = (results[0].formatted_address);
+            }
+        });
+    }*/
+
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -83,6 +101,7 @@ export class TasksDetailsComponent implements OnInit, AfterViewInit, OnDestroy
             res=>{
                 console.log(res)
                 this.order=res
+              //  this.getReverseGeocodingData(35.8010367,10.6357483)
                   // Mark for check
                  this._changeDetectorRef.markForCheck();
             }

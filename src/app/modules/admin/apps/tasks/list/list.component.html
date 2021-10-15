@@ -1,4 +1,4 @@
-<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+<div id="list" class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
 
     <mat-drawer-container class="flex-auto h-full bg-card dark:bg-transparent" (backdropClick)="onBackdropClicked()">
 
@@ -121,16 +121,16 @@
                                                 <!-- Status -->
                                                 <div class="grid grid-cols-2 gap-0">
                                                     <div>
-                                                        <img *ngIf="order.delivery && order.status!='DELIVERED'" class="h-8 w-8" src="https://www.clipartmax.com/png/full/67-676762_pizza-u0130skender-kebap-kebab-take-out-delivery-logo-giao-h%C3%A0ng.png">
+                                                        <img *ngIf="order?.delivery && order.status!='DELIVERED'" class="h-8 w-8" src="https://www.clipartmax.com/png/full/67-676762_pizza-u0130skender-kebap-kebab-take-out-delivery-logo-giao-h%C3%A0ng.png">
                                                     </div>
 
 
-                                                    <div *ngIf="order.status=='ORDERED'" class=" text-center border-gray-500 text-yellow-500 border-opacity-75"> PENDING</div>
-                                                    <div *ngIf="order.status=='ACCEPTED'" class=" text-center border-blue-500 text-blue-500 border-opacity-75"> ACCEPTED</div>
-                                                    <div *ngIf="order.status=='REJECTED'" class=" text-center border-red-500 text-red-500 border-opacity-75"> REJECTED</div>
-                                                    <div *ngIf="order.status=='PREPARED'" class=" text-center border-yellow-500 text-gray-900 border-opacity-75"> PREPARED</div>
-                                                    <div *ngIf="order.status=='DELIVERED'" class=" text-center border-green-500 text-green-500 border-opacity-75"> DELIVERED</div>
-                                                    <div *ngIf="order.status=='PICKED'" class=" text-center border-green-500 text-purple-500 border-opacity-75"> PICKED</div>
+                                                    <div *ngIf="order?.status=='ORDERED'" class=" text-center border-gray-500 text-yellow-500 border-opacity-75"> PENDING</div>
+                                                    <div *ngIf="order?.status=='ACCEPTED'" class=" text-center border-blue-500 text-blue-500 border-opacity-75"> ACCEPTED</div>
+                                                    <div *ngIf="order?.status=='REJECTED'" class=" text-center border-red-500 text-red-500 border-opacity-75"> REJECTED</div>
+                                                    <div *ngIf="order?.status=='PREPARED'" class=" text-center border-yellow-500 text-gray-900 border-opacity-75"> PREPARED</div>
+                                                    <div *ngIf="order?.status=='DELIVERED'" class=" text-center border-green-500 text-green-500 border-opacity-75"> DELIVERED</div>
+                                                    <div *ngIf="order?.status=='PICKED'" class=" text-center border-green-500 text-purple-500 border-opacity-75"> PICKED</div>
 
                                                 </div>
 

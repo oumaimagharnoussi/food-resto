@@ -1,28 +1,23 @@
 <div class="flex flex-auto">
 
-    <form
-        class="flex flex-col flex-auto p-6 pt-10 sm:p-8 sm:pt-10 overflow-y-auto"
-        >
+    <form class="flex flex-col flex-auto p-6 pt-10 sm:p-8 sm:pt-10 overflow-y-auto">
 
         <!-- Header -->
         <div class="flex items-center justify-between -mt-3 -ml-4">
 
             <!-- Mark as ... button -->
-            <button
-                class="pr-4 pl-3.5"
-                mat-button
-                (click)="toggleCompleted()">
+            <button class="pr-4 pl-3.5" mat-button (click)="toggleCompleted()">
 
                 <!-- Mark as complete -->
                 <ng-container >
                     <div class="flex  items-center justify-center">
-                        <img *ngIf="order.delivery && order.status!='DELIVERED'" class="h-8 w-8" src="https://www.clipartmax.com/png/full/67-676762_pizza-u0130skender-kebap-kebab-take-out-delivery-logo-giao-h%C3%A0ng.png">
-                        <span *ngIf="order.status=='ORDERED'" class="ml-2 font-semibold">PENDING</span>
-                        <span *ngIf="order.status=='ACCEPTED'" class="ml-2 font-semibold text-blue-500">ACCEPTED</span>
-                        <span *ngIf="order.status=='PREPARED'" class="ml-2 font-semibold text-gray-900">PREPARED</span>
-                        <span *ngIf="order.status=='DELIVERED'" class="ml-2 font-semibold text-green-500">DELIVERED</span>
-                        <span *ngIf="order.status=='REJECTED'" class="ml-2 font-semibold text-red-500">REJECTED</span>
-                        <span *ngIf="order.status=='PICKED'" class="ml-2 font-semibold text-purple-500">PICKED</span>
+                        <img *ngIf="order?.delivery && order?.status!='DELIVERED'" class="h-8 w-8" src="https://www.clipartmax.com/png/full/67-676762_pizza-u0130skender-kebap-kebab-take-out-delivery-logo-giao-h%C3%A0ng.png">
+                        <span *ngIf="order?.status=='ORDERED'" class="ml-2 font-semibold">PENDING</span>
+                        <span *ngIf="order?.status=='ACCEPTED'" class="ml-2 font-semibold text-blue-500">ACCEPTED</span>
+                        <span *ngIf="order?.status=='PREPARED'" class="ml-2 font-semibold text-gray-900">PREPARED</span>
+                        <span *ngIf="order?.status=='DELIVERED'" class="ml-2 font-semibold text-green-500">DELIVERED</span>
+                        <span *ngIf="order?.status=='REJECTED'" class="ml-2 font-semibold text-red-500">REJECTED</span>
+                        <span *ngIf="order?.status=='PICKED'" class="ml-2 font-semibold text-purple-500">PICKED</span>
                     </div> 
                    
                 </ng-container>
@@ -31,41 +26,31 @@
 
            
             </button>
-        
+
             <div class="flex items-center">
                 <!-- More menu -->
-                <button *ngIf="(order.status!='REJECTED' && order.status!='DELIVERED')||(order.orderType=='TAKEAWAY'&& order.status=='PREPARED')"
-                    mat-icon-button
-                    [matMenuTriggerFor]="moreMenu">
+                <button *ngIf="(order?.status!='REJECTED' && order?.status!='DELIVERED' && order?.status!='PREPARED' && order?.status!='PICKED')||(order?.orderType=='TAKEAWAY'&& order?.status=='PREPARED')" mat-icon-button [matMenuTriggerFor]="moreMenu">
                    <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
                 </button>
-                <mat-menu #moreMenu="matMenu" >
-                    <button *ngIf="order.status=='ORDERED'"
-                        mat-menu-item
-                        (click)="acceptOrder()">
+                <mat-menu #moreMenu="matMenu">
+                    <button *ngIf="order?.status=='ORDERED'" mat-menu-item (click)="acceptOrder()">
                 
                         <span class="text-green-500">Accept order</span>
                     </button>
 
-                    <button *ngIf="order.status=='ORDERED'"
-                        mat-menu-item
-                        (click)="rejectOrder()">
+                    <button *ngIf="order?.status=='ORDERED'" mat-menu-item (click)="rejectOrder()">
                       
                         <span class="text-red-500">Reject order</span>
                     </button>
 
-                    <button *ngIf="order.status=='ACCEPTED'"
-                    mat-menu-item
-                    (click)="prepareOrder()">
+                    <button *ngIf="order?.status=='ACCEPTED'" mat-menu-item (click)="prepareOrder()">
                    
                     <span class="text-blue-500">Set to prepared</span>
                 </button>
                 </mat-menu>
 
                 <!-- Close button -->
-                <button
-                    mat-icon-button
-                    [routerLink]="['../']">
+                <button mat-icon-button [routerLink]="['../']">
                     <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
                 </button>
             </div>
@@ -85,83 +70,82 @@
                 <label class="text-lg text-gray-400 font-semibold mr-2">Order date</label>
             </div>
             <div>
-                <label class="text-lg">{{ order.date | date:'short' }}</label>
+                <label class="text-lg">{{ order?.date | date:'short' }}</label>
             </div>
             <mat-divider class="mt-1 mb-1"></mat-divider>
             <div>
                 <label class="text-lg text-gray-400 font-semibold mr-2">Customer</label>
             </div>
             <div>
-                <label class="text-lg">{{order.client?.firstName}} {{order.client?.lastName}} </label> <br>
-                <label class="text-lg">{{order.client?.telephone}}</label> <br>
+                <label class="text-lg">{{order?.client?.firstName}} {{order?.client?.lastName}} </label> <br>
+                <label class="text-lg">{{order?.client?.telephone}}</label> <br>
                 <label class="text-lg">Rue de marseille apt38 cité ezzouhour, Kasserine</label>
             </div>
             <mat-divider class="mt-1 mb-1"></mat-divider>
             <div>
-                <label class="text-lg text-gray-400 font-semibold mr-2">Total ( {{order.orderPrice}} $ )</label>
+                <label class="text-lg text-gray-400 font-semibold mr-2">Total ( {{order?.orderPrice}} $ )</label>
             </div>
             <div>
                 <mat-accordion>
-             
-                    <mat-expansion-panel (opened)="panelOpenState = true"
-                                         (closed)="panelOpenState = false">
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
-                          {{order.lineItems.length}} items
-                        </mat-panel-title>
-                        <mat-panel-description>
-                         {{panelOpenState ? 'hide' : 'show'}} 
-                        </mat-panel-description>
-                      </mat-expansion-panel-header>
-                      <div class="flex text-xl">
-                        
-                        <div class="w-2/4">
-                          Product
+
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{order?.lineItems.length}} items
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                {{panelOpenState ? 'hide' : 'show'}}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <div class="flex text-xl">
+
+                            <div class="w-2/4">
+                                Product
+                            </div>
+                            <div class="w-1/4">
+                                Count
+                            </div>
+                            <div class="w-1/4">
+                                Total
+                            </div>
+
                         </div>
-                        <div class="w-1/4">
-                          Count
+                        <mat-divider></mat-divider>
+                        <div (click)="openDialog(item.product)" class=" text-xl text-gray-800 flex select-none hover:bg-gray-100 dark:hover:bg-hover" *ngFor="let item of order?.lineItems">
+
+                            <div class="w-2/4">
+                                {{item.product.name}}
+                            </div>
+                            <div class="w-1/4">
+                                {{item.quantity}}
+                            </div>
+                            <div class="w-1/4">
+                                {{item.total}} $
+                            </div>
+
                         </div>
-                        <div class="w-1/4">
-                          Total
-                        </div>
-                  
-                    </div>   
-                    <mat-divider></mat-divider>                  
-                      <div (click)="openDialog(item.product)" class=" text-xl text-gray-800 flex select-none hover:bg-gray-100 dark:hover:bg-hover" *ngFor="let item of order?.lineItems">
-                          
-                          <div class="w-2/4">
-                            {{item.product.name}}
-                          </div>
-                          <div class="w-1/4">
-                            {{item.quantity}}
-                          </div>
-                          <div class="w-1/4">
-                            {{item.total}} $
-                          </div>
-                    
-                      </div>
 
                     </mat-expansion-panel>
-                  </mat-accordion>
-                
-            
+                </mat-accordion>
+
+
             </div>
             <mat-divider class="mt-1 mb-1"></mat-divider>
             <div>
                 <label class="text-lg text-gray-400 font-semibold mr-2">Order notes</label>
             </div>
             <div>
-               
-                    <label class="text-lg"> Don't add cheese to the burger </label> 
-               
-                
-            
+
+                <label class="text-lg"> Don't add cheese to the burger </label>
+
+
+
             </div>
-             
+
         </div>
 
-      
-     
+
+
 
     </form>
 

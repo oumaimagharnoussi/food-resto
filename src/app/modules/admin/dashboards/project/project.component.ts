@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ApexOptions } from 'ng-apexcharts';
 import { ProjectService } from 'app/modules/admin/dashboards/project/project.service';
+import { SseService } from 'app/shared/services/sse.service';
 
 @Component({
     selector       : 'project',
@@ -30,7 +31,9 @@ export class ProjectComponent implements OnInit, OnDestroy
     constructor(
         private _projectService: ProjectService,
         private _router: Router,
-        private _changeDetectorRef: ChangeDetectorRef
+        private _changeDetectorRef: ChangeDetectorRef,
+        private sse_order:SseService,
+        private sse_reservation:SseService
     )
     {
     }
@@ -44,14 +47,50 @@ export class ProjectComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        this.sse_order.returnAsObservable().subscribe(data=>
+            {
         // Get the data
         this._projectService.getStatisitics().subscribe(
             res=>{
                 this.statistics=res
-                this._changeDetectorRef.markForCheck();
+                this._changeDetectorRef.detectChanges();
+                 this._changeDetectorRef.markForCheck();
                 console.log(this.statistics)
             }
         )
+      
+              /*  this._snackBar.open("New update !", "ok", {
+                  duration: 500,
+                });
+                */
+              console.log(data);
+            }
+          );
+
+          this.sse_reservation.returnAsObservable().subscribe(data=>
+            {
+        // Get the data
+        this._projectService.getStatisitics().subscribe(
+            res=>{
+                this.statistics=res
+                this._changeDetectorRef.detectChanges();
+                 this._changeDetectorRef.markForCheck();
+                console.log(this.statistics)
+            }
+        )
+      
+              /*  this._snackBar.open("New update !", "ok", {
+                  duration: 500,
+                });
+                */
+              console.log(data);
+            }
+          );
+        
+          this.sse_reservation.GetExchangeData('reservations');  
+          this.sse_order.GetExchangeData('orders');  
+
+
         this._projectService.data$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data) => {

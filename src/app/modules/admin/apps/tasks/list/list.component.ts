@@ -116,6 +116,7 @@ export class TasksListComponent implements OnInit, OnDestroy
             res=>  {
                 this.orders=res
                  // Mark for check
+                 this._changeDetectorRef.detectChanges();
                  this._changeDetectorRef.markForCheck();
             }
             
@@ -127,9 +128,16 @@ export class TasksListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+       // this.getOrders()
+
         this.sse.returnAsObservable().subscribe(data=>
             {
-              this.getOrders()
+                this.getOrders();
+                document.getElementById('list')
+                        .dispatchEvent(new MouseEvent('click', {shiftKey: true}))
+
+             
+              
       
               /*  this._snackBar.open("New update !", "ok", {
                   duration: 500,
