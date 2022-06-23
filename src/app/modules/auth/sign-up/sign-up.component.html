@@ -189,12 +189,15 @@
                 <!-- Name field -->
 
 
+                <mat-checkbox  (change)="updateCheckMaps($event)">
+                 Manual address entry 
+                </mat-checkbox>
 
 
 
 
                 <!-- Company field -->
-
+                <div *ngIf="checkMaps" >
 
                 <mat-search-google-maps-autocomplete *ngIf="selectedCountry=='TN'" appearance="outline" country="tn" (onChange)="onGermanAddressMapped($event)" (onGermanAddressMapped)=" onGermanAddressMapped($event) ">
                 </mat-search-google-maps-autocomplete>
@@ -204,8 +207,48 @@
 
                 <mat-search-google-maps-autocomplete *ngIf="selectedCountry=='RCD' " appearance="outline " country="cd " (onGermanAddressMapped)="onGermanAddressMapped($event) ">
                 </mat-search-google-maps-autocomplete>
-
-
+                <!-- Company field if Maps doesn't work-->
+              
+                </div>
+              
+                     <!-- addresse street -->
+                <div *ngIf="!checkMaps" >
+                     
+                <div class="flex space-x-1" >
+                <mat-form-field class="w-4/5" appearance="fill">
+                    <mat-label>address</mat-label>
+                    <input id="street" matInput  placeholder="Ex: Avenue jean jaures" [formControlName]="'street'">
+                </mat-form-field>
+                        
+                <mat-form-field class="w-1/5" appearance="fill">
+                    <mat-label>number</mat-label>
+                    <input id="streetNb" matInput type="number"  placeholder="32" [formControlName]="'streetNb'">
+                </mat-form-field>
+                </div>
+                <div class="flex space-x-1" >
+                <mat-form-field class="w-2/5" appearance="fill">
+                  <mat-label>Town</mat-label>
+                  <mat-select [(ngModel)]="town" [ngModelOptions]="{standalone: true}">
+                    <mat-option *ngFor="let t of towns" [value]="t.value">
+                      {{t.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="w-2/5" appearance="fill">
+                    <mat-label>Commune</mat-label>
+                    <mat-select [(ngModel)]="commune" [ngModelOptions]="{standalone: true}">
+                      <mat-option *ngFor="let c of communes" [value]="c.value">
+                        {{c.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="w-1/5" appearance="fill">
+                    <mat-label>Zip</mat-label>
+                    <input id="zipcode" matInput  placeholder="75000" [formControlName]="'zipcode'">
+                  </mat-form-field>
+                </div>
+            </div>
+                <!-- /Company field if Maps doesn't work-->
 
                 <!-- Submit button -->
                 <button class="fuse-mat-button-large w-full mt-6 " mat-flat-button [color]=" 'primary' " [disabled]="signUpForm.disabled " (click)="signUp() ">
