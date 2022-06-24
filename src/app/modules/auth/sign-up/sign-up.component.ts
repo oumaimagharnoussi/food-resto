@@ -52,6 +52,7 @@ export class AuthSignUpComponent implements OnInit
     address: Address;
     selectedCountry="TN";
     public checkMaps=true;
+    public manualChek=false;
     CongoTows = [
       {value: 'Kinshasa', viewValue: 'Kinshasa'},
       {value: 'Lubumbashi', viewValue: 'Lubumbashi'},
@@ -268,6 +269,8 @@ export class AuthSignUpComponent implements OnInit
             this.longitude = position.coords.longitude;
             this.zoom = 12;
           });
+        }else {
+               this.manualChek=true;
         }
       }
     
