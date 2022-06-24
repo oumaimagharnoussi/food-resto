@@ -39,9 +39,6 @@ export class AuthSignUpComponent implements OnInit
     signUpForm3: FormGroup;
     showAlert: boolean = false;
     currencies: Object;
-    devise:any=null
-    speciality:any=null
-    town:any=null
     commune:any=null
 
     public appearance = Appearance;
@@ -100,6 +97,7 @@ export class AuthSignUpComponent implements OnInit
 
     towns;
     communes;
+   
 
     /**
      * Constructor
@@ -161,7 +159,7 @@ export class AuthSignUpComponent implements OnInit
         this.signUpForm1 = this._formBuilder.group({
                 fname      : ['', Validators.required],
                 lname      : ['', Validators.required],
-                tel      : ['', Validators.required,Validators.pattern(/^[0-9]{10,15}$/)],
+                tel      : ['', [Validators.required,Validators.pattern(/^[0-9]{10,10}$/)]],
                 email     : ['', [Validators.required, Validators.email]],
                 password  : ['', Validators.required],
             
@@ -172,8 +170,9 @@ export class AuthSignUpComponent implements OnInit
          
           restauName  :  ['', Validators.required],
           description  :  ['', Validators.required],
-      
           restaurantTel:  ['', Validators.required],
+          speciality:  ['', Validators.required],
+          devise:    ['', Validators.required],
 
          
           
@@ -183,7 +182,8 @@ export class AuthSignUpComponent implements OnInit
 
     street : ['', Validators.required],
     streetNb  : ['', Validators.required],
-    zipcode : ['', Validators.required],
+    town : ['', Validators.required],
+    zipcode : [''],
     
 }
 );
@@ -229,7 +229,7 @@ export class AuthSignUpComponent implements OnInit
         restaurantInfo.businessAddress.streetNumber=this.address.streetNumber;
         }else{
               
-        restaurantInfo.businessAddress.locality=this.town;
+        restaurantInfo.businessAddress.locality=this.signUpForm3.value.town;
         restaurantInfo.businessAddress.administrativeAreaLevel1=this.commune
         restaurantInfo.businessAddress.country=this.selectedCountry;
         restaurantInfo.businessAddress.postalCode=this.signUpForm3.value.zipcode;
@@ -239,8 +239,8 @@ export class AuthSignUpComponent implements OnInit
         restaurantInfo.businessAddress.streetNumber=this.signUpForm3.value.streetNb;
         }
        
-        restaurantInfo.currency='api/currencies/'+this.devise
-        restaurantInfo.speciality='api/specialities/'+this.speciality
+        restaurantInfo.currency='api/currencies/'+this.signUpForm2.value.devise
+        restaurantInfo.speciality='api/specialities/'+this.signUpForm2.value.speciality
        // restaurantInfo.logo=this.restaurant.logo;
        
        

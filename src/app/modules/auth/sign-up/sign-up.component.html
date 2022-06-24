@@ -44,7 +44,7 @@
                 <!-- Name field -->
                 <mat-form-field class="w-full">
                     <mat-label>Télephone*</mat-label>
-                    <input id="tel" matInput [formControlName]="'tel'" pattern="^[0-9]{10,15}$" >
+                    <input id="tel" matInput [formControlName]="'tel'" >
                     <mat-error *ngIf="signUpForm1.get('tel').hasError('required')">
                         Phone is required
                     </mat-error>
@@ -132,8 +132,8 @@
             <!-- Name field -->
             <mat-form-field class="w-full">
 
-                <mat-label>Choose a Speciality</mat-label>
-                <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="speciality">
+                <mat-label>Choose a Speciality*</mat-label>
+                <mat-select [formControlName]="'speciality'">
                     <mat-option *ngFor="let s of specialities" [value]="s.id">{{s.label}}</mat-option>
 
                 </mat-select>
@@ -142,8 +142,8 @@
              <!-- Name field -->
              <mat-form-field class="w-full">
 
-                <mat-label>Choose devise</mat-label>
-                <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="devise">
+                <mat-label>Choose devise*</mat-label>
+                <mat-select [formControlName]="'devise'">
                     <mat-option *ngFor="let c of currencies" [value]="c.id">{{c.code}}</mat-option>
 
                 </mat-select>
@@ -212,14 +212,14 @@
                     </mat-form-field>
                             
                     <mat-form-field class="w-1/5" appearance="fill">
-                        <mat-label>number*</mat-label>
+                        <mat-label>Nr*</mat-label>
                         <input id="streetNb" matInput type="number"  placeholder="32" [formControlName]="'streetNb'">
                     </mat-form-field>
                     </div>
                     <div class="flex space-x-1" >
                     <mat-form-field class="w-2/5" appearance="fill">
-                      <mat-label>Town</mat-label>
-                      <mat-select [(ngModel)]="town" [ngModelOptions]="{standalone: true}">
+                      <mat-label>Town*</mat-label>
+                      <mat-select [formControlName]="'town'">
                         <mat-option *ngFor="let t of towns" [value]="t.value">
                           {{t.viewValue}}
                         </mat-option>
@@ -234,7 +234,7 @@
                         </mat-select>
                       </mat-form-field>
                       <mat-form-field class="w-1/5" appearance="fill">
-                        <mat-label>Zip*</mat-label>
+                        <mat-label>Zip</mat-label>
                         <input id="zipcode" matInput  placeholder="75000" [formControlName]="'zipcode'">
                       </mat-form-field>
                     </div>
