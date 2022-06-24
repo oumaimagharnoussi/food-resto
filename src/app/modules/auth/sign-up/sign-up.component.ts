@@ -160,7 +160,7 @@ export class AuthSignUpComponent implements OnInit
         this.signUpForm1 = this._formBuilder.group({
                 fname      : ['', Validators.required],
                 lname      : ['', Validators.required],
-                tel      : ['', Validators.required],
+                tel      : ['', Validators.required,Validators.pattern(/^[0-9]{10,15}$/)],
                 email     : ['', [Validators.required, Validators.email]],
                 password  : ['', Validators.required],
             
