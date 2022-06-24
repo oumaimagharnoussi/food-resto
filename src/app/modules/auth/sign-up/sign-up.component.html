@@ -1,6 +1,6 @@
 <div class="flex flex-col sm:flex-row items-start md:items-start   sm:justify-center md:justify-start flex-auto min-w-0">
-    <div class="md:flex md:items-start md:justify-start p-4 w-full sm:w-auto md:h-full  py-1  sm:p-12  sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
-        <div class="w-full max-w-70 sm:w-80 mx-auto sm:mx-0">
+    <div class="md:flex md:items-start md:justify-start p-4 w-full sm:w-auto md:h-full  py-1  sm:p-40  sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
+        <div class="w-full">
 
             <!-- Title -->
             <div class="mt-0 text-4xl font-extrabold tracking-tight leading-tight">Sign up</div>
@@ -15,14 +15,19 @@
                 {{alert.message}}
             </fuse-alert>
 
-            <!-- Sign Up form -->
-            <form class="mt-8" [formGroup]="signUpForm">
-
+             <!-- STEP bar for my form -->
+          <mat-stepper [linear]="true" #stepper >
+  
+            <!-- Sign Up form 1--> 
+           <mat-step [stepControl]="signUpForm1" >
+             <form class="mt-8" [formGroup]="signUpForm1">
+                <ng-template matStepLabel>Personal information</ng-template>
+           
                 <!-- Name field -->
                 <mat-form-field class="w-full">
                     <mat-label>First name</mat-label>
                     <input id="fname" matInput [formControlName]="'fname'">
-                    <mat-error *ngIf="signUpForm.get('fname').hasError('required')">
+                    <mat-error *ngIf="signUpForm1.get('fname').hasError('required')">
                         First name is required
                     </mat-error>
                 </mat-form-field>
@@ -31,7 +36,7 @@
                 <mat-form-field class="w-full">
                     <mat-label>Last name</mat-label>
                     <input id="lname" matInput [formControlName]="'lname'">
-                    <mat-error *ngIf="signUpForm.get('lname').hasError('required')">
+                    <mat-error *ngIf="signUpForm1.get('lname').hasError('required')">
                         Last name is required
                     </mat-error>
                 </mat-form-field>
@@ -40,22 +45,20 @@
                 <mat-form-field class="w-full">
                     <mat-label>Télephone</mat-label>
                     <input id="tel" matInput [formControlName]="'tel'">
-                    <mat-error *ngIf="signUpForm.get('tel').hasError('required')">
+                    <mat-error *ngIf="signUpForm1.get('tel').hasError('required')">
                         Phone is required
                     </mat-error>
                 </mat-form-field>
-
-
 
 
                 <!-- Email field -->
                 <mat-form-field class="w-full">
                     <mat-label>Email address</mat-label>
                     <input id="email" matInput [formControlName]="'email'">
-                    <mat-error *ngIf="signUpForm.get('email').hasError('required')">
+                    <mat-error *ngIf="signUpForm1.get('email').hasError('required')">
                         Email address is required
                     </mat-error>
-                    <mat-error *ngIf="signUpForm.get('email').hasError('email')">
+                    <mat-error *ngIf="signUpForm1.get('email').hasError('email')">
                         Please enter a valid email address
                     </mat-error>
                 </mat-form-field>
@@ -79,195 +82,188 @@
                     </mat-error>
                 </mat-form-field>
 
-
-
-
-
-
+                  <div>
+                    <button mat-button matStepperNext>Next</button>
+                 </div>
             </form>
-        </div>
-    </div>
-    <div class="md:flex  md:justify-start w-full sm:w-auto md:h-full p-4  py-1  sm:p-12  sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
-        <div class="w-full max-w-90 sm:w-80 mx-auto sm:mx-0">
-            <!-- Logo -->
+          </mat-step>
 
 
 
-            <!-- Alert -->
+         <!-- Sign Up form 2-->
+         <mat-step [stepControl]="signUpForm2" >
+            <ng-template matStepLabel>Restaurant information</ng-template>
+         <form class="mt-2" [formGroup]="signUpForm2">
+            <!-- Name field -->
             <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'error'">
                 {{alert.message}}
-            </fuse-alert>
+             </fuse-alert>
 
-            <!-- Sign Up form -->
-            <form class="mt-2" [formGroup]="signUpForm">
-                <!-- Name field -->
-
-                <mat-form-field class="w-full">
-                    <mat-label>Restaurant name</mat-label>
-                    <input id="restauName" matInput [formControlName]="'restauName'">
-                    <mat-error *ngIf="signUpForm.get('restauName').hasError('required')">
-                        Restaurant name is required
-                    </mat-error>
-                </mat-form-field>
-
-
-
-                <!-- Name field -->
-                <mat-form-field class="w-full">
-                    <mat-label>short description</mat-label>
-                    <input id="name" matInput [formControlName]="'description'">
-                    <mat-error *ngIf="signUpForm.get('description').hasError('required')">
-                        description is required
-                    </mat-error>
-                </mat-form-field>
-
-                <!-- Name field -->
-                <mat-form-field class="w-full">
-                    <mat-label>Work phone</mat-label>
-                    <input id="restaurantTel" matInput [formControlName]="'restaurantTel'">
-                    <mat-error *ngIf="signUpForm.get('restaurantTel').hasError('required')">
-                        Phone is required
-                    </mat-error>
-                </mat-form-field>
-                <!-- Name field -->
-                <mat-form-field class="w-full">
-
-                    <mat-label>Choose a Speciality</mat-label>
-                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="speciality">
-                        <mat-option *ngFor="let s of specialities" [value]="s.id">{{s.label}}</mat-option>
-
-                    </mat-select>
-
-                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
-                        Full name is required
-                    </mat-error>
-                </mat-form-field>
-                <!-- Name field -->
-                <mat-form-field class="w-full">
-
-                    <mat-label>Choose devise</mat-label>
-                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="devise">
-                        <mat-option *ngFor="let c of currencies" [value]="c.id">{{c.code}}</mat-option>
-
-                    </mat-select>
-
-                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
-                        Full name is required
-                    </mat-error>
-                </mat-form-field>
-
-
-            </form>
-        </div>
-    </div>
-
-    <div class="md:flex  md:justify-start w-full sm:w-auto md:h-full p-4  py-1  sm:p-12  sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
-        <div class="w-full max-w-90 sm:w-80 mx-auto sm:mx-0">
-            <!-- Logo -->
-
-
-
-            <!-- Alert -->
-            <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'error'">
-                {{alert.message}}
-            </fuse-alert>
-
-            <mat-form-field class="w-full pr-1">
-
-                <mat-label>Country</mat-label>
-                <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedCountry" (selectionChange)="show()">
-                    <mat-option value="TN">Tunisia</mat-option>
-                    <mat-option value="RCD">RCD</mat-option>
-                    <mat-option value="FR">France</mat-option>
-                </mat-select>
-
-
+            <mat-form-field class="w-full">
+                <mat-label>Restaurant name</mat-label>
+                <input id="restauName" matInput [formControlName]="'restauName'">
+                <mat-error *ngIf="signUpForm2.get('restauName').hasError('required')">
+                    Restaurant name is required
+                </mat-error>
             </mat-form-field>
 
-            <!-- Sign Up form -->
-            <form class="mt-2" [formGroup]="signUpForm">
-                <!-- Name field -->
 
 
-                <mat-checkbox  (change)="updateCheckMaps($event)">
-                 Manual address entry 
-                </mat-checkbox>
+            <!-- Name field -->
+            <mat-form-field class="w-full">
+                <mat-label>short description</mat-label>
+                <input id="name" matInput [formControlName]="'description'">
+                <mat-error *ngIf="signUpForm2.get('description').hasError('required')">
+                    description is required
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Name field -->
+            <mat-form-field class="w-full">
+                <mat-label>Work phone</mat-label>
+                <input id="restaurantTel" matInput [formControlName]="'restaurantTel'">
+                <mat-error *ngIf="signUpForm2.get('restaurantTel').hasError('required')">
+                    Phone is required
+                </mat-error>
+            </mat-form-field>
+            <!-- Name field -->
+            <mat-form-field class="w-full">
+
+                <mat-label>Choose a Speciality</mat-label>
+                <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="speciality">
+                    <mat-option *ngFor="let s of specialities" [value]="s.id">{{s.label}}</mat-option>
+
+                </mat-select>
+
+             </mat-form-field>
+             <!-- Name field -->
+             <mat-form-field class="w-full">
+
+                <mat-label>Choose devise</mat-label>
+                <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="devise">
+                    <mat-option *ngFor="let c of currencies" [value]="c.id">{{c.code}}</mat-option>
+
+                </mat-select>
+               </mat-form-field>
 
 
+                <div>
 
-
-                <!-- Company field -->
-                <div *ngIf="checkMaps" >
-
-                <mat-search-google-maps-autocomplete *ngIf="selectedCountry=='TN'" appearance="outline" country="tn" (onChange)="onGermanAddressMapped($event)" (onGermanAddressMapped)=" onGermanAddressMapped($event) ">
-                </mat-search-google-maps-autocomplete>
-
-                <mat-search-google-maps-autocomplete *ngIf="selectedCountry=='FR' " appearance="outline " country="fr " (onGermanAddressMapped)="onGermanAddressMapped($event) ">
-                </mat-search-google-maps-autocomplete>
-
-                <mat-search-google-maps-autocomplete *ngIf="selectedCountry=='RCD' " appearance="outline " country="cd " (onGermanAddressMapped)="onGermanAddressMapped($event) ">
-                </mat-search-google-maps-autocomplete>
-                <!-- Company field if Maps doesn't work-->
-              
-                </div>
-              
-                     <!-- addresse street -->
-                <div *ngIf="!checkMaps" >
-                     
-                <div class="flex space-x-1" >
-                <mat-form-field class="w-4/5" appearance="fill">
-                    <mat-label>address</mat-label>
-                    <input id="street" matInput  placeholder="Ex: Avenue jean jaures" [formControlName]="'street'">
-                </mat-form-field>
-                        
-                <mat-form-field class="w-1/5" appearance="fill">
-                    <mat-label>number</mat-label>
-                    <input id="streetNb" matInput type="number"  placeholder="32" [formControlName]="'streetNb'">
-                </mat-form-field>
-                </div>
-                <div class="flex space-x-1" >
-                <mat-form-field class="w-2/5" appearance="fill">
-                  <mat-label>Town</mat-label>
-                  <mat-select [(ngModel)]="town" [ngModelOptions]="{standalone: true}">
-                    <mat-option *ngFor="let t of towns" [value]="t.value">
-                      {{t.viewValue}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <mat-form-field class="w-2/5" appearance="fill">
-                    <mat-label>Commune</mat-label>
-                    <mat-select [(ngModel)]="commune" [ngModelOptions]="{standalone: true}">
-                      <mat-option *ngFor="let c of communes" [value]="c.value">
-                        {{c.viewValue}}
-                      </mat-option>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+               </div>
+            </form>
+            </mat-step>
+            <!-- Sign Up form 3-->
+            <mat-step  [stepControl]="signUpForm3"  errorMessage="Address is required.">
+                <ng-template matStepLabel>Restaurant address</ng-template>
+                <!-- Sign Up form -->
+                <form class="mt-2" [formGroup]="signUpForm3">
+                
+                <!-- Alert -->
+                <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'error'">
+                    {{alert.message}}
+                </fuse-alert>
+    
+                <mat-form-field class="w-full pr-1">
+    
+                    <mat-label>Country</mat-label>
+                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedCountry" (selectionChange)="show()">
+                        <mat-option value="TN">Tunisia</mat-option>
+                        <mat-option value="RCD">RCD</mat-option>
+                        <mat-option value="FR">France</mat-option>
                     </mat-select>
-                  </mat-form-field>
-                  <mat-form-field class="w-1/5" appearance="fill">
-                    <mat-label>Zip</mat-label>
-                    <input id="zipcode" matInput  placeholder="75000" [formControlName]="'zipcode'">
-                  </mat-form-field>
-                </div>
-            </div>
-                <!-- /Company field if Maps doesn't work-->
-
-                <!-- Submit button -->
-                <button class="fuse-mat-button-large w-full mt-6 " mat-flat-button [color]=" 'primary' " [disabled]="signUpForm.disabled " (click)="signUp() ">
-                    <span *ngIf="!signUpForm.disabled ">
+    
+    
+                </mat-form-field>
+    
+                   <!-- Name field -->
+    
+    
+                    <mat-checkbox  (change)="updateCheckMaps($event)">
+                     Manual address entry 
+                    </mat-checkbox>
+    
+                    <!-- Company field -->
+                    <div *ngIf="checkMaps" >
+    
+                    <mat-search-google-maps-autocomplete *ngIf="selectedCountry=='TN'" appearance="outline" country="tn" (onChange)="onGermanAddressMapped($event)" (onGermanAddressMapped)=" onGermanAddressMapped($event) ">
+                    </mat-search-google-maps-autocomplete>
+    
+                    <mat-search-google-maps-autocomplete *ngIf="selectedCountry=='FR' " appearance="outline " country="fr " (onGermanAddressMapped)="onGermanAddressMapped($event) ">
+                    </mat-search-google-maps-autocomplete>
+    
+                    <mat-search-google-maps-autocomplete *ngIf="selectedCountry=='RCD' " appearance="outline " country="cd " (onGermanAddressMapped)="onGermanAddressMapped($event) ">
+                    </mat-search-google-maps-autocomplete>
+                    <!-- Company field if Maps doesn't work-->
+                  
+                    </div>
+                  
+                         <!-- addresse street -->
+                    <div *ngIf="!checkMaps" >
+                         
+                    <div class="flex space-x-1" >
+                    <mat-form-field class="w-4/5" appearance="fill">
+                        <mat-label>address</mat-label>
+                        <input id="street" matInput  placeholder="Ex: Avenue jean jaures" [formControlName]="'street'">
+                    </mat-form-field>
+                            
+                    <mat-form-field class="w-1/5" appearance="fill">
+                        <mat-label>number</mat-label>
+                        <input id="streetNb" matInput type="number"  placeholder="32" [formControlName]="'streetNb'">
+                    </mat-form-field>
+                    </div>
+                    <div class="flex space-x-1" >
+                    <mat-form-field class="w-2/5" appearance="fill">
+                      <mat-label>Town</mat-label>
+                      <mat-select [(ngModel)]="town" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let t of towns" [value]="t.value">
+                          {{t.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="w-2/5" appearance="fill">
+                        <mat-label>Commune</mat-label>
+                        <mat-select [(ngModel)]="commune" [ngModelOptions]="{standalone: true}">
+                          <mat-option *ngFor="let c of communes" [value]="c.value">
+                            {{c.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field class="w-1/5" appearance="fill">
+                        <mat-label>Zip</mat-label>
+                        <input id="zipcode" matInput  placeholder="75000" [formControlName]="'zipcode'">
+                      </mat-form-field>
+                    </div>
+                    </div>
+    
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <p>You are now done. click on create button to finalize your registration</p>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <!-- Submit button -->
+                  <button class="fuse-mat-button-large w-full mt-6 " mat-flat-button [color]=" 'primary' " [disabled]="signUpForm3.disabled " (click)="signUp() ">
+                    <span *ngIf="!signUpForm3.disabled ">
                         Create your free account
                     </span>
                     <mat-progress-spinner
-                        *ngIf="signUpForm.disabled "
+                        *ngIf="signUpForm3.disabled "
                         [diameter]="24 "
                         [mode]=" 'indeterminate' "></mat-progress-spinner>
                 </button>
-
-            </form>
-
-
-        </div>
+                </div>
+            </mat-step>
+        </mat-stepper>
+      </div>
     </div>
-
-
+    
     <div class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l ">
         <!-- Background - @formatter:off -->
         <!-- Rings -->

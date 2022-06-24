@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import {MatCardModule} from '@angular/material/card';
-
+import {MatStepperModule} from '@angular/material/stepper';
 @NgModule({
     declarations: [
         AuthSignUpComponent
@@ -34,7 +34,8 @@ import {MatCardModule} from '@angular/material/card';
         MatSelectModule,
         MatSnackBarModule,
         MatCardModule,
-        MatGoogleMapsAutocompleteModule
+        MatGoogleMapsAutocompleteModule,
+        MatStepperModule
     ]
 })
 export class AuthSignUpModule

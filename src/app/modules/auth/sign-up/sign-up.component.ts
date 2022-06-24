@@ -34,7 +34,9 @@ export class AuthSignUpComponent implements OnInit
         type   : 'success',
         message: ''
     };
-    signUpForm: FormGroup;
+    signUpForm1: FormGroup;
+    signUpForm2: FormGroup;
+    signUpForm3: FormGroup;
     showAlert: boolean = false;
     currencies: Object;
     devise:any=null
@@ -154,27 +156,36 @@ export class AuthSignUpComponent implements OnInit
             }
             
         );
-        // Create the form
-        this.signUpForm = this._formBuilder.group({
+        // Create the 3 form group 
+        this.signUpForm1 = this._formBuilder.group({
                 fname      : ['', Validators.required],
                 lname      : ['', Validators.required],
-                name      : ['', Validators.required],
                 tel      : ['', Validators.required],
                 email     : ['', [Validators.required, Validators.email]],
                 password  : ['', Validators.required],
             
-                restauName  :  ['', Validators.required],
-                description  :  ['', Validators.required],
-           
-            
-                restaurantTel:  ['', Validators.required],
-
-                street : ['', Validators.required],
-                streetNb  : ['', Validators.required],
-                zipcode : ['', Validators.required],
-                
             }
         );
+
+        this.signUpForm2 = this._formBuilder.group({
+         
+          restauName  :  ['', Validators.required],
+          description  :  ['', Validators.required],
+      
+          restaurantTel:  ['', Validators.required],
+
+         
+          
+      }
+  );
+  this.signUpForm3 = this._formBuilder.group({
+
+    street : ['', Validators.required],
+    streetNb  : ['', Validators.required],
+    zipcode : ['', Validators.required],
+    
+}
+);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -191,18 +202,20 @@ export class AuthSignUpComponent implements OnInit
    
         const restaurantOwnerInfo = new RestaurantOwner();
        
-        restaurantOwnerInfo.password = this.signUpForm.value.password;
-        restaurantOwnerInfo.email = this.signUpForm.value.email;
-        restaurantOwnerInfo.firstName = this.signUpForm.value.fname;
-        restaurantOwnerInfo.lastName = this.signUpForm.value.lname;
-        restaurantOwnerInfo.telephone = this.signUpForm.value.tel;
+        restaurantOwnerInfo.password = this.signUpForm1.value.password;
+        restaurantOwnerInfo.email = this.signUpForm1.value.email;
+        restaurantOwnerInfo.firstName = this.signUpForm1.value.fname;
+        restaurantOwnerInfo.lastName = this.signUpForm1.value.lname;
+        restaurantOwnerInfo.telephone = this.signUpForm1.value.tel;
         // Hide the alert
         this.showAlert = false;
 
         const restaurantInfo= new Restaurant();
         restaurantInfo.businessAddress=new Address();
-        restaurantInfo.description=this.signUpForm.value.description;
-        restaurantInfo.name=this.signUpForm.value.restauName;
+        restaurantInfo.description=this.signUpForm2.value.description;
+        restaurantInfo.name=this.signUpForm2.value.restauName;
+        restaurantInfo.restaurantTel=this.signUpForm2.value.restaurantTel;
+
        
         if(this.checkMaps){
         restaurantInfo.businessAddress.locality=this.address.locality;
@@ -218,19 +231,18 @@ export class AuthSignUpComponent implements OnInit
         restaurantInfo.businessAddress.locality=this.town;
         restaurantInfo.businessAddress.administrativeAreaLevel1=this.commune
         restaurantInfo.businessAddress.country=this.selectedCountry;
-        restaurantInfo.businessAddress.postalCode=this.signUpForm.value.zipcode;
-        restaurantInfo.businessAddress.route=this.signUpForm.value.street;
+        restaurantInfo.businessAddress.postalCode=this.signUpForm3.value.zipcode;
+        restaurantInfo.businessAddress.route=this.signUpForm3.value.street;
         restaurantInfo.businessAddress.latitude=this.latitude;
         restaurantInfo.businessAddress.longitude=this.longitude;
-        restaurantInfo.businessAddress.streetNumber=this.signUpForm.value.streetNb;
+        restaurantInfo.businessAddress.streetNumber=this.signUpForm3.value.streetNb;
         }
        
         restaurantInfo.currency='api/currencies/'+this.devise
         restaurantInfo.speciality='api/specialities/'+this.speciality
        // restaurantInfo.logo=this.restaurant.logo;
        
-        restaurantInfo.restaurantTel=this.signUpForm.value.restaurantTel;
-
+       
         // Sign up
         this._authService.signUp(restaurantOwnerInfo)
             .subscribe(
