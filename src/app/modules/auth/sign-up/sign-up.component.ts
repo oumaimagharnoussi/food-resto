@@ -259,6 +259,13 @@ export class AuthSignUpComponent implements OnInit
                     // Navigate to the confirmation required page
                   //  this._router.navigateByUrl('/confirmation-required');
                 }
+                ,
+                      err => {
+                        this.showAlert=true;
+                        // TODO penser à gerer l'exception du doublon de l'email non encore géré
+                        this.alert.message=err.error.detail
+                        this.alert.type="error";
+                        console.log ("error : ",err)}
             );
     }
 

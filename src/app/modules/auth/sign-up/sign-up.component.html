@@ -98,10 +98,7 @@
             <ng-template matStepLabel>Restaurant information</ng-template>
          <form class="mt-2" [formGroup]="signUpForm2">
             <!-- Name field -->
-            <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'error'">
-                {{alert.message}}
-             </fuse-alert>
-
+           
             <mat-form-field class="w-full">
                 <mat-label>Restaurant name*</mat-label>
                 <input id="restauName" matInput [formControlName]="'restauName'">
@@ -163,11 +160,7 @@
                 <!-- Sign Up form -->
                 <form class="mt-2" [formGroup]="signUpForm3">
                 
-                <!-- Alert -->
-                <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'error'">
-                    {{alert.message}}
-                </fuse-alert>
-    
+               
                 <mat-form-field class="w-full pr-1">
     
                     <mat-label>Country*</mat-label>
