@@ -37,10 +37,15 @@
             <!-- Company -->
             <div class="sm:col-span-2">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Speciality</mat-label>
+                  <!-- <mat-label>Speciality</mat-label>
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'" matPrefix></mat-icon>
                     <input [formControlName]="'speciality'" matInput>
-                </mat-form-field>
+                </mat-form-field>-->
+                <mat-label>Speciality</mat-label>
+                <mat-select [value]="specialityId" >
+                    <mat-option   *ngFor="let s of specialities"  [value]="s.id" che>{{s.label}}</mat-option>
+                </mat-select>
+            </mat-form-field>
             </div>
             <!-- About -->
             <div class="sm:col-span-4">
