@@ -98,4 +98,14 @@ export class UserComponent implements OnInit, OnDestroy
     {
         this._router.navigate(['/sign-out']);
     }
+
+
+    navigateMenu(tag){
+        if(tag === 'settings'){
+             this._router.navigate(['/pages/settings']);
+            }
+        else if(tag === 'profile'){
+            this._router.navigate(['/pages/profile']);
+        }
+      }
 }
