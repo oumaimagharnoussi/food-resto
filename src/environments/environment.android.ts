@@ -2,12 +2,14 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// This config is for android emulator
+// You must replace this config with your own local IP address
 export const environment = {
     production: false,
-    BACKEND: 'http://localhost:8000',
-    API: 'http://localhost:8000/api/',
+    BACKEND: 'http://192.168.1.7:8000',
+    API: 'http://192.168.1.7:8000/api/',
     S3_url: 'https://dev-rd-food.s3.eu-north-1.amazonaws.com/document/',
-    SSE_url: 'http://localhost:3000',
+    SSE_url: 'http://192.168.1.7:3000',
 };
 
 /*

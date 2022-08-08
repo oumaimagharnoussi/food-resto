@@ -8,6 +8,7 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
+        "android": "ng serve --configuration=android",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint"

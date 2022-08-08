@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Restaurant from 'app/shared/Models/Restaurant';
 import RestaurantOwner from 'app/shared/Models/RestaurantOwner';
 import { SettingService } from '../setting.service';
+import { SpecialityService } from 'app/shared/services/speciality.service';
 
 @Component({
     selector       : 'settings-account',
@@ -18,6 +19,8 @@ export class SettingsAccountComponent implements OnInit
     }
     resto: Restaurant;
     name: string="test";
+    specialities:any;
+    specialityId :number
 
     /**
      * Constructor
@@ -25,7 +28,8 @@ export class SettingsAccountComponent implements OnInit
     constructor(
         private _formBuilder: FormBuilder,
         private _settingService: SettingService,
-        private _changeDetectorRef: ChangeDetectorRef
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _specialityService: SpecialityService
     )
     {
         
@@ -41,6 +45,13 @@ export class SettingsAccountComponent implements OnInit
     ngOnInit(): void
     {
 
+         // Get speciality list
+         this._specialityService.getSpecialities().subscribe(
+            (res)=>{
+                this.specialities=res
+            }
+            
+        );
 
         // Create the form
         this.accountForm = this._formBuilder.group({
@@ -49,7 +60,6 @@ export class SettingsAccountComponent implements OnInit
             title   : [''],
             name : [''],
             description   : [''],
-            speciality: [''],
             email   : ['example@mail.com', Validators.email],
             telephone   : ['+33'],
             country : ['usa'],
@@ -70,10 +80,10 @@ export class SettingsAccountComponent implements OnInit
                 console.log(this.resto)
                 this._changeDetectorRef.markForCheck();
                 this.accountForm.patchValue(res[0])
-                this.accountForm.patchValue({
-                    speciality:res[0].speciality.label,
+                this.accountForm.patchValue({  
                     country:res[0].businessAddress.country
-                })
+                });
+                this.specialityId= res[0].speciality.id;
             }
         )
         

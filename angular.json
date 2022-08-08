@@ -42,9 +42,7 @@
                             "src/manifest.json"
                         ],
                         "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "src/@fuse/styles"
-                            ]
+                            "includePaths": ["src/@fuse/styles"]
                         },
                         "styles": [
                             "src/@fuse/styles/tailwind.scss",
@@ -80,6 +78,20 @@
                             ],
                             "outputHashing": "all"
                         },
+                        "android": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.android.ts"
+                                }
+                            ],
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        },
                         "development": {
                             "buildOptimizer": false,
                             "optimization": false,
@@ -99,6 +111,9 @@
                         },
                         "development": {
                             "browserTarget": "fuse:build:development"
+                        },
+                        "android": {
+                            "browserTarget": "fuse:build:android"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -123,19 +138,14 @@
                             "src/assets",
                             "src/manifest.json"
                         ],
-                        "styles": [
-                            "src/styles/styles.scss"
-                        ],
+                        "styles": ["src/styles/styles.scss"],
                         "scripts": []
                     }
                 },
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": [
-                            "src/**/*.ts",
-                            "src/**/*.html"
-                        ]
+                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
                     }
                 }
             }
